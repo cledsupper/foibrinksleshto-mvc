@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>FoiBrinks versão VERSAO</title>
+
+  <!-- Elementos relativos ao Bootstrap e à jQuery -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <!-- Script que conserta a página como eu quero -->
+  <script type="text/javascript" src="scripts/formatador-basico.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>FoiBrinks</h1>      
+    <p>Terminal de Atendimento do Vendedor</p>
+  </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="lista/produtos.jsp">TAV</a>
+    </div>
+    <!-- VEJA scripts/formatador-basico.js -->
+    <div class="collapse navbar-collapse" id="myNavbar">P-SOBRE</div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Bem vindo ao <i>FoiBrinks - Terminal de Atendimento do Vendedor</i></h1>
+  <h3>por Cledson Cavalcanti ("Leshto")</h3>
+  <br>
+  <p>O <i>FoiBrinks TAV</i> é um projeto desenvolvido por mim no curso Bacharel em Sistemas de Informação da UFERSA - Campus de Angicos, sendo parte do processo avaliativo da componente curricular <strong>Programação Web</strong>.</p>
+  <p>O FoiBrinks atualmente se encontra na versão <span class="VERSAO">[DEVERIA APARECER O NÚMERO DA VERSÃO AQUI!!! OPORRA???]</span>. É um projeto JavaEE que utiliza a biblioteca MariaDB para se comunicar com um banco de dados MariaDB/MySQL, o Bootstrap (versão:) 3 para o desenvolvimento das interfaces web, e o jQuery 3 para facilitar o uso do JavaScript (embora, na prática, eu tenha utilizado mais o JavaScript comum).</p>
+  <br><br>
+</div>
+
+<footer class="container-fluid text-center">
+  <p id="leshto-copyright-footer-note"></p>
+</footer>
+
+</body>
+</html>

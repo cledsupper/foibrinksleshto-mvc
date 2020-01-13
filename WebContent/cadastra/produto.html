@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="ISO-8859-1">
+  <title>FoiBrinks: Cadastrar Produto</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <!-- Script que conserta a página como eu quero. -->
+  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
+
+  <!-- Veja modelo.jsp para saber o que essas coisas significam -->
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+
+  <!-- Para estilizar os formulários do jeito que eu quero. -->
+  <link rel="stylesheet" href="../css/formularios.css">
+</head>
+<body>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>FoiBrinks</h1>      
+    <p>Terminal de Atendimento do Vendedor</p>
+  </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="..">TAV</a>
+    </div>
+    <!-- VEJA scripts/formatador-basico.js -->
+    <div class="collapse navbar-collapse" id="myNavbar">P-CADASTRA-PRODUTO</div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Cadastro de Produto</h1>
+  <br>
+
+  <form action="../control" method="POST">
+  	<input type="hidden" name="acao" value="CadastraProdutoAcao">
+
+    <h3>Dados obrigatórios</h3>
+    <br>
+    <p>Insira o nome</p>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-nome">Nome do produto</span>
+    	<input type="text" class="form-control" name="nome" placeholder="Bola de Futebol" aria-describedby="addon-nome" required>
+    </div>
+    <br><br>
+
+    <p>Insira a marca</p>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-marca">Marca ou nome da fabricante</span>
+    	<input type="text" class="form-control" name="marca" placeholder="SuperBola" aria-describedby="addon-marca" required>
+    </div>
+    <br><br>
+
+    <p>Insira a faixa etária</p>
+    <p class="observe">A faixa etária do produto deve ser menor ou igual a 14 anos, mas você pode definir outro valor que não consta na lista, desde que respeite essa restrição.</p>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-combo-faixa-etaria">Seleção de faixa etária</span>
+    	<select id="combo-faixa-etaria" class="form-control" name="combo-faixa-etaria" aria-describedby="addon-combo-faixa-etaria" onchange="validaFaixaEtaria();" required>
+    		<option value="">[Selecione a faixa etária]</option>
+	    	<option value="0">Livre</option>
+    		<option value="5">5 anos</option>
+    		<option value="10">10 anos</option>
+	    	<option value="14">14 anos</option>
+       		<option value="OUTRO">Especificar</option>
+    	</select>
+    </div>
+    <div id="campo-faixa-etaria-grupo" class="input-group" style="display: none;">
+    	<span class="input-group-addon" id="addon-campo-faixa-etaria">Faixa etária</span>
+    	<input id="campo-faixa-etaria" class="form-control" type="number" name="campo-faixa-etaria" placeholder="3" maxlength="2" aria-describedby="addon-campo-faixa-etaria" oninput="validaFaixaEtaria();">
+    </div>
+    <br><br>
+
+    <h3>Os dados seguintes não são obrigatórios, mas é recomendado preenchê-los.</h3>
+    <p>Você pode alterá-los depois.</p>
+    <br>
+    <p class="observe linha-centro">Por favor, preencha os campos conforme o exemplo: 1234,50</p>
+    <br>
+
+    <h4>Dimensões e peso</h4>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-altura">Altura</span>
+    	<input type="number" class="form-control" name="altura" placeholder="1.23" step="0.01" aria-describedby="addon-altura">
+    </div>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-largura">Largura</span>
+    	<input type="number" class="form-control" name="largura" placeholder="1.23" step="0.01" aria-describedby="addon-largura">
+    </div>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-profundidade">Profundidade</span>
+    	<input type="number" class="form-control" name="profundidade" placeholder="1.23" step="0.01" aria-describedby="addon-profundidade">
+    </div>
+    <br>
+    <p>Peso</p>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-peso">Peso</span>
+    	<input type="number" class="form-control" name="peso" placeholder="1.23" step="0.01" aria-describedby="addon-peso">
+    </div>
+    <br><br>
+    <h3>Preço</h3>
+    <h4>Insira o preço do produto</h4>
+    <div class="input-group">
+    	<span class="input-group-addon" id="addon-preco">R$</span>
+    	<input type="number" class="form-control" name="preco" placeholder="2.99" step="0.01" aria-describedby="addon-preco" required>
+    </div>
+    <br><br>
+
+    <p style="text-align: center"><button class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span>	Salvar</button></p>
+  </form>
+  <br><br>
+  <script src="../scripts/formatador-formulario.js"></script>
+</div>
+
+<footer class="container-fluid text-center">
+  <p id="leshto-copyright-footer-note"></p>
+</footer>
+
+</body>
+</html>

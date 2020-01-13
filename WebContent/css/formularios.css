@@ -1,0 +1,43 @@
+/* por Leshto */
+table {
+	width: 100%;
+}
+
+th {
+	text-align: center;
+}
+
+th, td {
+    border: 4px solid transparent;
+    vertical-align: middle;
+}
+
+/* Para textos de observação. */
+.observe {
+	color: rgb(190, 175, 0);
+}
+
+.sucesso {
+	color: rgb(45, 200, 45);
+}
+
+.erro {
+	color: rgb(225, 15, 15);
+}
+
+.coluna-centro {
+	text-align: center;
+	vertical-align: center;
+}
+
+.linha-centro {
+	text-align: center;
+}
+
+.linha-esquerdo {
+	text-align: left;
+}
+
+.linha-direito {
+	text-align: right;
+}
