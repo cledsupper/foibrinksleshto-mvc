@@ -48,7 +48,7 @@ public class AtualizaProdutoAcao implements Acao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao salvar dados do produto:\n"
-					+ e.getLocalizedMessage());
+					+ e.getMessage());
 			return;
 		}
 

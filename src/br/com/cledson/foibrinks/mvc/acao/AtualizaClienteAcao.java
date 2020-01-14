@@ -30,20 +30,6 @@ public class AtualizaClienteAcao implements Acao {
 		try {
 			Cliente cliente = ClienteDAC.le(codigo);
 
-			/* Verificação de duplicidade */
-			Cliente cliente_2 = ClienteDAC.lePorCpf(cpf);
-			if (cliente_2 != null)
-				if (cliente.getCodigo() != cliente_2.getCodigo()) {
-					res.getWriter().write("Erro ao atualizar dados do cliente: um cliente com o mesmo CPF já existe!");
-					return;
-				}
-			cliente_2 = ClienteDAC.lePorNomeData(nome, ORIUtilitarios.dataHTMLParaData(data_nascimento));
-			if (cliente_2 != null)
-				if (cliente.getCodigo() != cliente_2.getCodigo()) {
-					res.getWriter().write("Erro ao atualizar dados do cliente: um cliente com o mesmo nome e data de nascimento já existe!");
-					return;
-				}
-
 			cliente.setNomeCompleto(nome);
 			cliente.setDataNascimentoHTML(data_nascimento);
 			cliente.setGenero(combo_genero.equals(Constantes.COMBO_VALOR_OUTRO) ?
@@ -59,7 +45,7 @@ public class AtualizaClienteAcao implements Acao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao atualizar cliente:\n"
-					+ e.getLocalizedMessage());
+					+ e.getMessage());
 			return;
 		}
 

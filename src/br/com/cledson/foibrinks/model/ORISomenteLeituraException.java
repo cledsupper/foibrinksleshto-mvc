@@ -6,7 +6,7 @@ package br.com.cledson.foibrinks.model;
  */
 public class ORISomenteLeituraException extends ORIException {
 
-	/** LanÃ§a um erro de escrita (ORISomenteLeituraException).
+	/** Lança um erro de escrita (ORISomenteLeituraException).
 	 * 
 	 * @param ori - objeto relacionado ao erro
 	 */
@@ -16,5 +16,9 @@ public class ORISomenteLeituraException extends ORIException {
 
 	public ORISomenteLeituraException(ORI ori, String mensagem) {
 		super(ori, mensagem);
+	}
+
+	ORISomenteLeituraException(ORIException e) {
+		super(e);
 	}
 }

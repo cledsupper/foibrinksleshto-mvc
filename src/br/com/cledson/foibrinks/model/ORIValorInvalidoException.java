@@ -11,4 +11,8 @@ public class ORIValorInvalidoException extends ORIException {
 	public ORIValorInvalidoException(ORI ori, String erro) {
 		super(ori, erro);
 	}
+
+	public ORIValorInvalidoException(ORIException e) {
+		super(e);
+	}
 }

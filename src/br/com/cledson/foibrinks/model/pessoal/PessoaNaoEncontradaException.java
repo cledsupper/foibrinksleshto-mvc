@@ -1,5 +1,6 @@
 package br.com.cledson.foibrinks.model.pessoal;
 
+import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.model.ORINaoEncontradoException;
 
 public class PessoaNaoEncontradaException extends ORINaoEncontradoException {
@@ -11,5 +12,9 @@ public class PessoaNaoEncontradaException extends ORINaoEncontradoException {
 
 	public PessoaNaoEncontradaException(Pessoa pessoa, String erro) {
 		super(pessoa, erro);
+	}
+
+	public PessoaNaoEncontradaException(ORIException e) {
+		super(e);
 	}
 }

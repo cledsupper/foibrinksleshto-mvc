@@ -10,8 +10,67 @@ import java.util.Calendar;
 import br.com.cledson.foibrinks.bd.ConnectionFactory;
 import br.com.cledson.foibrinks.model.pessoal.Cliente;
 import br.com.cledson.foibrinks.model.pessoal.PessoaIncadastravelException;
+import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 
+/** ClienteDAC - Uma classe que oferece métodos para manipulação de dados dos
+ * clientes no banco de dados.
+ * <br>
+ * <br>
+ * <h1>Por quê DAC (Data Access Class) e não DAO (Data Access Object)?</h1>
+ * <p>Não estou usando o padrão DAO (Data Access Object) de propósito,
+ * porque NÃO É ÚTIL instanciar um objeto apenas para usar uma função/
+ * procedimento (f/p) que nem utiliza ele para funcionar.</p>
+ * <br><br>
+ * <h2>O que são métodos?<h2>
+ * <p>Métodos no paradigma de programação orientada a objetos existem
+ * por uma justificativa: se há <strong>um</strong> (<strong>1</strong>
+ * ) objeto com atributos que caracterizam ele de tal maneira (em uma
+ * palavra: "ESTADO" do objeto), e uma função/procedimento DEPENDE do
+ * estado desse objeto e OPERA sobre ele ou representa o seu
+ * comportamento, então ela deve ser declarada/definida como um método.</p>
+ * <br>
+ * <h3>Expressão lógica que define esse axioma, onde "foo" se refere a
+ * uma f/p:</h3>
+ * <blockquote>foo.depends_of(object) ^ (foo.operates_in(object) OR foo
+ * .represents_behavior_of(object)) => foo.is_method()</blockquote>
+ * <br>
+ * <p>Todo método de <strong>um</strong> objeto possui embutido um
+ * ponteiro <strong>this</strong> exatamente por essa justificativa: o
+ *  método DEPENDE DO ESTADO DO OBJETO PARA FUNCIONAR.</p>
+ * <br><br>
+ * <h2>O que são funções e procedimentos?</h2>
+ * <p>Em contrapartida, as <strong>funções e procedimentos</strong>
+ * existem para realizar algum trabalho independente do estado de um
+ * objeto, dependendo apenas de seus parâmetros de entrada (que podem
+ * conter um ou mais objetos).</p>
+ * <br>
+ * <p>Por serem um conjunto maior em relação aos métodos, elas não
+ * possuem um ponteiro this. Um método é uma f/p, mas nem toda f/p é
+ * um método.</p>
+ * <br><br>
+ * <h2>RESUMO "DA ÓPERA"</h2>
+ * <p>Porque nenhuma das f/ps presentes nesta classe operariam sob um
+ * atributo de instância da classe, não as defini como métodos.</p>
+ * <br>
+ * <p>As f/ps desta classe não dependem do estado de <strong>nenhum</strong>
+ *  (<strong>0</strong>) objeto, ou sequer precisam de um objeto
+ *  diretamente (exemplo: static Numero soma(Numero numero1, Numero
+ *  numero2) é uma função de classe que depende de <strong>DOIS</strong>
+ *   (<strong>2</strong>) objetos do tipo Numero, logo não é método)</p>
+ * <br><br>
+ * <h2><em>Entre para o movimento #DeixeOsObjetosBrincar(), em prol
+ * do respeito ao objeto enquanto Ser Objeto!</em></h2>
+ * 
+ * @author Cledson Cavalcanti
+ *
+ */
 public class ClienteDAC {
+	/** Lê os dados de um cliente através do código.
+	 * 
+	 * @param codigo		- autoexplicativo.
+	 * @return Cliente		- objeto com dados do cliente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static Cliente le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
@@ -27,6 +86,12 @@ public class ClienteDAC {
 		return cliente;
 	}
 
+	/** Lê os dados de um cliente através do nome e da data de nascimento.
+	 * 
+	 * @param codigo		- autoexplicativo.
+	 * @return Cliente		- objeto com dados do cliente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static Cliente lePorNomeData(String nomeCompleto,
 			Calendar dataNascimento) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
@@ -44,6 +109,14 @@ public class ClienteDAC {
 		return cliente;
 	}
 
+	/** Para casos de urgência, é útil retornar o cliente através do CPF.
+	 * 
+	 * OBSERVAÇÃO: O CPF DEVE ESTAR NO FORMATO 'OK', VEJA A DOCUMENTAÇÃO DA CLASSE EM model.pessoal, Cliente, PARA SABER COMO TRANSFORMAR UM CPF 'legível para humanos' EM 'ok' (formato do BD).
+	 * 
+	 * @param cpf			- CPF no formato 'OK' (ex.: 12345678901)
+	 * @return Cliente		- objeto com dados do cliente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static Cliente lePorCpf(String cpf) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
@@ -59,6 +132,12 @@ public class ClienteDAC {
 		return cliente;
 	}
 
+	/** Pesquisa através do nome ou parte dele
+	 * 
+	 * @param nome			- pedaço do nome do cliente.
+	 * @return Cliente		- objeto com dados do cliente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static ArrayList<Cliente> pesquisaPorNome(String nome) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
@@ -74,6 +153,14 @@ public class ClienteDAC {
 		return clientes;
 	}
 
+	/** Lista todos os clientes na ordem da primeira inclusão no banco.
+	 * 
+	 * Se recentes = true: a lista é ordenada a partir da maior data, i.e., os clientes são ordenados a partir do último cadastrado.
+	 * 
+	 * @param recentes				- ordenar a partir do último registro?
+	 * @return ArrayList<Cliente>	- uma lista de clientes.
+	 * @throws SQLException			- erro interno ou de engenharia.
+	 */
 	public static ArrayList<Cliente> listaClientes(boolean recentes)
 		throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
@@ -97,7 +184,21 @@ public class ClienteDAC {
 		return clientes;
 	}
 
-	public static void registra(Cliente cliente) throws SQLException {
+	/** Registra os dados de um cliente no banco de dados.
+	 * 
+	 * @param Cliente						- objeto com dados do cliente, marcado
+	 * para cadastro (isto é: código = ORIConstantes.LONG_ORI_CODIGO_CADASTRAVEL).
+	 * @throws SQLException					- erro interno ou de engenharia.
+	 * @throws PessoaIncadastravelException - erro de duplicidade.
+	 */
+	public static void registra(Cliente cliente)
+			throws SQLException, PessoaIncadastravelException {
+		try {
+			verificaSeExiste(cliente);
+		} catch (PessoaJaExisteException e) {
+			throw new PessoaIncadastravelException(e);
+		}
+
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn
 				.prepareStatement("INSERT INTO clientes("
@@ -122,7 +223,17 @@ public class ClienteDAC {
 		conn.close();
 	}
 
-	public static boolean salva(Cliente cliente) throws SQLException {
+	/** Salva os dados de um cliente existente no banco de dados.
+	 * 
+	 * @param cliente					- objeto com os dados do cliente.
+	 * @return boolean					- se alguma linha foi afetada.
+	 * @throws SQLException 			- erro interno ou de engenharia.
+	 * @throws PessoaJaExisteException	- erro de duplicidade.
+	 */
+	public static boolean salva(Cliente cliente)
+			throws SQLException, PessoaJaExisteException {
+		verificaSeExiste(cliente);
+
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn
 				.prepareStatement("UPDATE clientes SET nome_completo=?, data_nascimento=?,"
@@ -149,6 +260,12 @@ public class ClienteDAC {
 		return row_count > 0;	
 	}
 
+	/** Remove os dados do cliente do banco de dados.
+	 * 
+	 * @param codigo		- código do cliente.
+	 * @return boolean		- se alguma linha foi afetada.
+	 * @throws SQLException	- erro interno ou de engenharia.
+	 */
 	public static boolean remove(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn
@@ -162,18 +279,26 @@ public class ClienteDAC {
 		return row_count > 0;
 	}
 
+	/** Verifica se um cliente com mesmo nome e data de nascimento já existe no banco de dados.
+	 * 
+	 * @param cliente					- objeto com os dados do cliente.
+	 * @throws PessoaJaExisteException	- caso um cliente com os mesmos dados já exista.
+	 * @throws SQLException				- erro interno ou de engenharia.
+	 */
 	public static void verificaSeExiste(Cliente cliente)
-			throws PessoaIncadastravelException, SQLException {
+			throws PessoaJaExisteException, SQLException {
 		Cliente outro_cliente = lePorNomeData(cliente.getNomeCompleto(),
 				cliente.getDataNascimento());
 		if (outro_cliente != null)
-			throw new PessoaIncadastravelException(cliente,
-					"Cliente jÃ¡ cadastrado.");
+			if (outro_cliente.getCodigo() != cliente.getCodigo())
+				throw new PessoaJaExisteException(cliente,
+					"Outro cliente com mesmo nome e data de nascimentos já existe.");
 
 		outro_cliente = lePorCpf(cliente.getCpf());
 		if (outro_cliente != null)
-			throw new PessoaIncadastravelException(cliente,
-					"Cliente jÃ¡ cadastrado.");
+			if (outro_cliente.getCodigo() != cliente.getCodigo())
+				throw new PessoaJaExisteException(cliente,
+					"Outro cliente com o mesmo CPF já existe.");
 	}
 
 	private static Cliente resultSetParaCliente(ResultSet rs)

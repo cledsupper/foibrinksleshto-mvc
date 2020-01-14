@@ -53,7 +53,7 @@ public class CadastraClienteAcao implements Acao {
 		} catch (PessoaIncadastravelException | SQLException e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao cadastrar cliente:\n"
-					+ e.getLocalizedMessage());
+					+ e.getMessage());
 			return;
 		}
 

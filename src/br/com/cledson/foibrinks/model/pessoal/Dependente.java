@@ -10,7 +10,8 @@ public class Dependente extends Pessoa {
 
 	/** Cria um cadastro de dependente.
 	 * 
-	 * NOTA: o dependente criado com este construtor deve ser adicionado a um objeto Cliente obtido do banco de dados.
+	 * NOTA: o dependente criado com este construtor deve ser registrado em
+	 * relaÁ„o a um objeto Cliente obtido do banco de dados.
 	 */
 	public Dependente() {
 		super();
@@ -19,10 +20,10 @@ public class Dependente extends Pessoa {
 
 	/** Cria um dependente para cliente.
 	 * 
-	 * NOTA: este construtor s√≥ pode ser usado por (Cliente).adicionaDependente().
+	 * NOTA: este construtor sÛ pode ser usado por (Cliente).adicionaDependente().
 	 * 
-	 * @param cliente
-	 * @param dep 
+	 * @param cliente	- objeto com os dados do cliente.
+	 * @param dep		- objeto com os dados do novo dependente.
 	 */
 	protected Dependente(Cliente cliente, Dependente dep) {
 		super();
@@ -36,7 +37,7 @@ public class Dependente extends Pessoa {
 		}
 	}
 
-	/** Constr√≥i um cadastro para o dependente existente no banco de dados.
+	/** ConstrÛi um cadastro para o dependente existente no banco de dados.
 	 * 
 	 * @param codigo
 	 * @param cliente
@@ -51,7 +52,7 @@ public class Dependente extends Pessoa {
 	}
 
 	public static Dependente[] procuraDependentes(long codigoCliente) {
-		// TODO implemente este m√©todo
+		// TODO implemente este mÈtodo
 		return null;
 	}
 	
@@ -60,41 +61,38 @@ public class Dependente extends Pessoa {
 	}
 
 	/** Registra o dependente do cliente no banco de dados.
-	 * Este m√©todo n√£o deve ser chamado antes do cliente associado ser registrado! 
+	 * Este mÈtodo n„o deve ser chamado antes do cliente associado ser registrado! 
 	 * @throws SQLException 
 	 * @throws ORIValorInvalidoException */
 	@Override
 	public void cadastra() throws PessoaIncadastravelException, SQLException {
 		super.cadastra();
 		if (CLIENTE.cadastravel())
-			throw new PessoaIncadastravelException(this, "Cliente deveria estar cadastrado!");
-
-		if (DependenteDAC.lePorNomeData(CLIENTE,
-				this.getNomeCompleto(), this.getDataNascimento()) != null)
-			throw new PessoaIncadastravelException(this, "O dependente j√° existe");
+			throw new PessoaIncadastravelException(this);
 
 		DependenteDAC.registra(this);
 	}
 	
-	/** Salva as altera√ß√µes nos dados do dependete j√° cadastrado.
-	 * O cliente nunca √© afetado.
+	/** Salva as alteraÁıes nos dados do dependete j· cadastrado.
+	 * O cliente nunca È afetado.
 	 * 
-	 * NOTA: esta fun√ß√£o deve ser chamada diretamente.
+	 * NOTA: esta funÁ„o deve ser chamada diretamente.
 	 * 
 	 * @throws PessoaNaoEncontradaException
+	 * @throws PessoaJaExisteException 
 	 * @throws SQLException
 	 */
 	@Override
-	public void salva() throws PessoaNaoEncontradaException, SQLException {
+	public void salva()
+			throws PessoaNaoEncontradaException, PessoaJaExisteException, SQLException {
 		super.salva();
 
 		if (DependenteDAC.salva(this) == false)
 			throw new PessoaNaoEncontradaException(this);
 	}
 
-	/** Esta fun√ß√£o √© chamada por (Cliente).removeDependente() para realizar a remo√ß√£o.
-	 * 
-	 * NOTA: n√£o chame esta fun√ß√£o diretamente.
+	/** Esta funÁ„o È chamada por (Cliente).removeDependente() para realizar a remoÁ„o
+	 * do dependente.
 	 * 
 	 * @throws PessoaNaoEncontradaException
 	 * @throws SQLException
