@@ -1,6 +1,8 @@
 var formatoCPF = /^([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2})$/;
 
-/* Eu peguei o código deste método na web. */
+/* Eu me inspirei nas soluÃ§Ãµes da Q&A linkada abaixo.
+ * Base de conhecimento: https://pt.stackoverflow.com/questions/218989/formatar-sequencia-num%C3%A9rica-em-formato-cpf-com-separadores-usando-javascript
+ */
 function formataCPF() {
 	var campoCPF = $("#campo-cpf")[0];
 	var cpf = campoCPF.value;
@@ -23,7 +25,6 @@ function validaCPF() {
 		if (campo.value.length == 11)
 			formataCPF();
 	}
-	return true;
 };
 
 const COMBO_VALOR_OUTRO = "OUTRO";
