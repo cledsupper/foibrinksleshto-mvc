@@ -189,8 +189,8 @@ public class VendaDAC {
 			}
 		} else {
 			long numero_cartao = rs.getLong("numero_cartao");
-			Cartao pagamento = new Cartao(venda, numero_cartao);
 			try {
+				Cartao pagamento = new Cartao(venda, numero_cartao);
 				venda.setPagamento(pagamento);
 			} catch (Exception e) {
 				e.printStackTrace();

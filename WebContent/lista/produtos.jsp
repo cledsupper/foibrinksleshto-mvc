@@ -107,6 +107,7 @@
 					<th scope="col">Codigo</th>
 					<th scope="col">Nome do produto</th>
 					<th scope="col">Marca</th>
+					<th scope="col">Faixa etária</th>
 					<th scope="col">Preço</th>
 					<th class="linha-centro" scope="col">Quantidade para adicionar</th>
 				</tr>
@@ -114,16 +115,20 @@
 			<tbody>
 <%
 			for (int i=0; i < produtos.size(); i++) {
-				String codigo = "" + produtos.get(i).getCodigo();
-				String nome = produtos.get(i).getNome();
-				String marca = produtos.get(i).getMarca();
-				String preco = "" + produtos.get(i).getPreco();
+				Produto produto = produtos.get(i);
+				String codigo = "" + produto.getCodigo();
+				String nome = produto.getNome();
+				String marca = produto.getMarca();
+				String faixaEtaria = "" + produto.getFaixaEtaria();
+				faixaEtaria = faixaEtaria.equals("0") ? "LIVRE PARA TODAS AS IDADES" : faixaEtaria + " anos"; 
+				String preco = "" + produto.getPreco();
 %>
 				<tr>
 					<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
 					<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
-					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><%= nome %></button></td>
+					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
 					<td class="linha-centro"><%= marca %></td>
+					<td class="linha-centro"><%= faixaEtaria %></td>
 					<td class="linha-direito"><%= preco %></td>
 					<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 				</tr>

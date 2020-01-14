@@ -18,7 +18,7 @@ public class ConnectionFactory {
 			String DATABASE = "foibrinks_leshto";
 			String USERNAME = "root";
 			String PASSWORD = "";
-			conn = DriverManager.getConnection("jdbc:mariadb://" + HOSTNAME +
+			conn = DriverManager.getConnection("jdbc:mysql://" + HOSTNAME +
 					"/" + DATABASE, USERNAME, PASSWORD);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
