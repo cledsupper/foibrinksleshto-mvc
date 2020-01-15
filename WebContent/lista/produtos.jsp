@@ -72,9 +72,8 @@
 <div class="container">
 <%
 	String notifica_remocao = request.getParameter("notifica-remocao");
-	//String notifica_erro = request.getParameter("notifica-erro");
 	if (notifica_remocao != null)
-		out.write("<h2 class=\"sucesso linha-centro\">Produto removido!</h2>");
+		out.write("<h2 class=\"aviso sucesso linha-centro\">Produto removido!</h2>");
 
 	ArrayList<Produto> produtos = null;
 	try {
@@ -82,7 +81,7 @@
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao ler dados:</h1>"
-		  + "<samp>" + e.getMessage() + "</samp>");
+				+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	if (produtos != null) {
@@ -120,8 +119,8 @@
 				String nome = produto.getNome();
 				String marca = produto.getMarca();
 				String faixaEtaria = "" + produto.getFaixaEtaria();
-				faixaEtaria = faixaEtaria.equals("0") ? "LIVRE PARA TODAS AS IDADES" : faixaEtaria + " anos"; 
-				String preco = "" + produto.getPreco();
+				faixaEtaria = faixaEtaria.equals("0") ? "LIVRE" : faixaEtaria + " anos"; 
+				String preco = String.format("R$ %.2f", produto.getPreco());
 %>
 				<tr>
 					<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>

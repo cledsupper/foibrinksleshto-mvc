@@ -102,12 +102,12 @@
 		String notifica_salvo = request.getParameter("notifica-salvo");
 		if (notifica_salvo != null) {
 %>
-			<h3 class="sucesso linha-centro">OS DADOS FORAM SALVOS!</h3>
+			<h3 class="aviso sucesso linha-centro">OS DADOS FORAM SALVOS!</h3>
 <%		}
 		String notifica_erro = request.getParameter("notifica-erro");
 		if (notifica_erro != null) { %>
-			<h3 class="erro linha-centro">ERRO AO REMOVER</h3>
-			<h4 class="erro linha-centro">Produtos vendidos não podem ser removidos.</h4>
+			<h3 class="aviso erro linha-centro">ERRO AO REMOVER</h3>
+			<h4 class="aviso erro linha-centro">Produtos vendidos não podem ser removidos.</h4>
 <%		} %>
   <br>
 

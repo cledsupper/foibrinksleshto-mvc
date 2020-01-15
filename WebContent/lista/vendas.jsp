@@ -69,14 +69,14 @@
 <%
 	String notifica_remocao = request.getParameter("notifica-remocao");
 	if (notifica_remocao != null)
-		out.write("<h2 class=\"sucesso linha-centro\">Venda removida!</h2>");
+		out.write("<h2 class=\"aviso sucesso linha-centro\">Venda removida!</h2>");
 	ArrayList<Venda> vendas = null;
 	try {
 		vendas = VendaDAC.listaVendas();
 	} catch (Exception e) {
 		e.printStackTrace();
-		out.println("<h1>Erro ao ler dados:</h1>"
-		  + "<samp>" + e.getMessage() + "</samp>");
+		out.println("<h1 class=\"erro\">Erro ao listar vendas</h1>"
+					+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	if (vendas != null) {
@@ -106,13 +106,14 @@
 				<tbody>
 <%
 	for (int i=0; i < vendas.size(); i++) {
-		long codigo = vendas.get(i).getCodigo();
-		long codigoCliente = vendas.get(i).getCliente().getCodigo();
-		String nomeCliente = vendas.get(i).getCliente().getNomeCompleto();
-		String dataVenda = vendas.get(i).getDataVendaStringBr();
-		char forma_letra = vendas.get(i).getPagamento().getForma();
+		Venda venda = vendas.get(i);
+		long codigo = venda.getCodigo();
+		long codigoCliente = venda.getCliente().getCodigo();
+		String nomeCliente = venda.getCliente().getNomeCompleto();
+		String dataVenda = venda.getDataVendaStringBr();
+		char forma_letra = venda.getPagamento().getForma();
 		String forma = forma_letra == 'D' ? "Dinheiro em espécie" : "Cartão de crédito";
-		String valorPago = ""+vendas.get(i).getPagamento().getValorPago();
+		String valorPago = String.format("R$ %.2f", venda.getPagamento().getValorPago());
 %>
 				<tr>
 					<td class="linha-centro" scope="row"><%= codigo %></td>

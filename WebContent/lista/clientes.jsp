@@ -68,13 +68,13 @@
 <%
 	String notifica_remocao = request.getParameter("notifica-remocao");
 	if (notifica_remocao != null)
-		out.write("<h2 class=\"sucesso linha-centro\">Cliente removido!</h2>");
+		out.write("<h2 class=\"aviso sucesso linha-centro\">Cliente removido!</h2>");
 	ArrayList<Cliente> clientes = null;
 	try {
 		clientes = ClienteDAC.listaClientes(true);
 	} catch (Exception e) {
-		out.println("<h1 class=\"erro\">Erro ao listar clientes</h1>\n" +
-					"<samp>" + e.getLocalizedMessage() + "</samp>");
+		out.println("<h1 class=\"erro\">Erro ao listar clientes</h1>\n"
+				+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	/* BLOCO-CLIENTES-NAO-NULL */
@@ -100,7 +100,6 @@
 					<input type="hidden" name="produto-qtd" value="<%= produtos_qtds[i] %>" >
 <%				}
 %>
-					<!-- Isto está sendo mostrando somente no BLOCO-VENDA. Eu demorei muito pra entender. -->
 					<h1>Cadastro de venda</h1>
 					<h3>Selecione um cliente</h3>
 					<table class="table">

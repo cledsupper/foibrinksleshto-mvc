@@ -1,9 +1,20 @@
 const VERSAO = "1.2.191224 beta";
 
+function fechaAvisos() {
+	var aviso = $(".aviso");
+	for (var it=0; it < aviso.length; it++)
+		aviso[it].outerHTML = '';
+};
+
 $(document).ready(function() {
 	/* Identifica a página corrente e constrói uma barra de navegação apropriada. */
 	var myNavbar = $("#myNavbar");
 	var bakHtml = myNavbar.html();
+	/* Ocultar jumbotron. Isso continuará assim até a versão final */
+	if (bakHtml !== 'P-SOBRE' && bakHtml !== 'P-MODELO') {
+		var jumbotron = $('.jumbotron');
+		jumbotron.css("display", "none");
+	}
 	myNavbar.html(
 		'<ul class="nav navbar-nav">'
 			//+ (bakHtml === 'P-INDEX' ? '<li class="active"><a href="#">'
@@ -41,8 +52,12 @@ $(document).ready(function() {
 			+ ' Voltar</button>	' + h1[1].innerHTML;
 	}
 	
+	/* Alinhar colunas verticalmente no centro */
 	var td = $('td');
 	td.css("vertical-align", "middle");
+	
+	/* Fechar avisos após 5 segs */
+	setTimeout(fechaAvisos, 5000);
 
 	/* Colocar nota de copyright no rodapé. */
 	var yearNow = new Date().getYear() + 1900;
