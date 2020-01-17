@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FoiBrinks</title>
+  <title>FoiBrinks: Clientes</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
