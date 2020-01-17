@@ -96,6 +96,7 @@
 		String cep = cliente.getCep();
 		String cidade = cliente.getCidade();
 		String estado = cliente.getEstado();
+
 		boolean genero_outro = PessoaValidador.generoOutro(genero);
 		char pronome = genero_outro || genero.equals(PessoaConstantes.STRING_GENERO_NAO_ESPECIFICAR) ?
 				'e' : (genero.equals(PessoaConstantes.STRING_GENERO_FEMININO) ? 'a' : 'o');
@@ -104,7 +105,7 @@
 <%
 		String notifica_salvo = request.getParameter("notifica-salvo");
 		if (notifica_salvo != null)
-			out.write("<h3 class=\"sucesso linha-centro\">OS DADOS FORAM SALVOS!</h3>");
+			out.write("<h3 class=\"aviso sucesso linha-centro\">OS DADOS FORAM SALVOS!</h3>");
 %>
   <br>
 

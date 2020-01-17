@@ -94,13 +94,15 @@ Cliente cliente = ClienteDAC.le(codigo_cliente);
 		<h1>Dependentes de <%= cliente.getNomeCompleto() %></h1>
 <%
 		if (dependentes.size() == 0) { %>
-			<h3>Nenhum dependente foi encontrado no banco de dados :(</h3>
+			<h3>Nenhum dependente foi encontrado :?</h3>
 			<br>
 			<p class="linha-centro"><a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a></p>
 <%
 		} else {
 %>
 		<h3>Dependentes</h3>
+		<br>
+		<a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a>
 
 		<table class="table">
 			<thead>

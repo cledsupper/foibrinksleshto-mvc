@@ -47,19 +47,6 @@ public class Dependente extends Pessoa {
 		this.CLIENTE = cliente;
 	}
 
-	public static Dependente procura(long codigo) throws SQLException {
-		return DependenteDAC.le(codigo);
-	}
-
-	public static Dependente[] procuraDependentes(long codigoCliente) {
-		// TODO implemente este método
-		return null;
-	}
-	
-	public static Dependente[] procuraDependentes(Cliente cliente) {
-		return procuraDependentes(cliente.getCodigo());
-	}
-
 	/** Registra o dependente do cliente no banco de dados.
 	 * Este método não deve ser chamado antes do cliente associado ser registrado! 
 	 * @throws SQLException 
