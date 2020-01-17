@@ -96,25 +96,28 @@
 		String cep = cliente.getCep();
 		String cidade = cliente.getCidade();
 		String estado = cliente.getEstado();
+
 		boolean genero_outro = PessoaValidador.generoOutro(genero);
+		char pronome = genero_outro || genero.equals(PessoaConstantes.STRING_GENERO_NAO_ESPECIFICAR) ?
+				'e' : (genero.equals(PessoaConstantes.STRING_GENERO_FEMININO) ? 'a' : 'o');
 %>
-  <h1>Cadastro d<span class="letra-pronome">o</span> cliente</h1>
+  <h1>Cadastro d<span class="letra-pronome"><%= pronome %></span> cliente</h1>
 <%
 		String notifica_salvo = request.getParameter("notifica-salvo");
 		if (notifica_salvo != null)
-			out.write("<h3 class=\"sucesso linha-centro\">OS DADOS FORAM SALVOS!</h3>");
+			out.write("<h3 class=\"aviso sucesso linha-centro\">OS DADOS FORAM SALVOS!</h3>");
 %>
   <br>
 
   <form action="../control?codigo=<%= codigo %>" method="POST">
     <input type="hidden" name="acao" value="AtualizaClienteAcao">
 
-    <h4 class="observe">Cliente cadastrado em: <%= data_cadastro %></h4>
+    <h4 class="observe">Cliente cadastrad<span class="letra-pronome"><%= pronome %></span> em: <%= data_cadastro %></h4>
     <br>
     <h3>Dependentes de <%= nome %></h3>
     <br>
     <div class="btn-group btn-group-lg" role="group" aria-label="Opções para gerenciar dependentes do cliente">
-    	<button type="button" class="btn btn-primary" onclick="irPara('../lista/dependentes.jsp?codigo-cliente=<%= codigo %>');"><span class="glyphicon glyphicon-th-list">	Gerenciar</span></button>
+    	<button type="button" class="btn btn-primary" onclick="irPara('../lista/dependentes.jsp?codigo-cliente=<%= codigo %>');"><span class="glyphicon glyphicon-th-list"></span>	Gerenciar</button>
     	<button type="button" class="btn btn-success" onclick="irPara('../cadastra/dependente.jsp?codigo-cliente=<%= codigo %>');"><span class="glyphicon glyphicon-plus"></span>	Adicionar</button>
     </div>
     <br><br>
@@ -123,7 +126,7 @@
     <p>Insira o nome completo</p>
     <div class="input-group">
     	<span class="input-group-addon" id="addon-nome">Nome completo</span>
-    	<input type="text" class="form-control" placeholder="Seu Nome Aqui" name="nome" aria-describedby="addon-nome" value="<%= nome %>" required>
+    	<input type="text" class="form-control" placeholder="Nome do Cliente Aqui" name="nome" aria-describedby="addon-nome" value="<%= nome %>" required>
     </div>
     <br><br>
 
@@ -134,7 +137,7 @@
     </div>
     <br><br>
 
-    <p>Selecione o gênero d<span class="letra-pronome">o</span> cliente</p>
+    <p>Selecione o gênero d<span class="letra-pronome"><%= pronome %></span> cliente</p>
     <div class="input-group" id="compo-genero-grupo">
     	<span class="input-group-addon" id="addon-combo-genero">Seleção de gênero</span>
     	<select id="combo-genero" class="form-control" name="combo-genero" onchange="validaGenero();" aria-describedby="addon-combo-genero" required>
@@ -151,7 +154,7 @@
     </div>
     <br><br>
 
-    <p>Insira o CPF <span class="observe"></span></p>
+    <p>Insira o CPF</p>
     <div class="input-group">
     	<span class="input-group-addon" id="addon-cpf">CPF</span>
     	<input type="text" class="form-control" name="cpf" placeholder="123.456.789-01" id="campo-cpf" aria-describedby="addon-cpf" value="<%= cpf %>" onchange="validaCPF();" required>
@@ -168,22 +171,22 @@
     	<span class="input-group-addon" id="addon-estado-civil">Seleção de estado civil</span>
     	<select class="form-control" name="estado-civil" aria-describedby="addon-estado-civil">
     		<option value="">Não especificar</option>
-	    	<option value="SOLTEIRO"<% if (estadoCivil.equals("SOLTEIRO")) out.write(" selected=\"true\""); %>>Solteiro/a</option>
+	    	<option value="SOLTEIRO"<% if (estadoCivil.equals("SOLTEIRO")) out.write(" selected=\"true\""); %>>Solteir<%= pronome %></option>
     		<option value="RELACIONAMENTO"<% if (estadoCivil.equals("RELACIONAMENTO")) out.write(" selected=\"true\""); %>>Namorando</option>
-    		<option value="CASADO"<% if (estadoCivil.equals("CASADO")) out.write(" selected=\"true\""); %>>Casado/a</option>
+    		<option value="CASADO"<% if (estadoCivil.equals("CASADO")) out.write(" selected=\"true\""); %>>Casad<%= pronome %></option>
     	</select>
     </div>
     <br><br>
     
     <h4>Endereço</h4>
     <br>
-    <p>Insira a rua onde <span class="letra-pronome">o</span> cliente mora</p>
+    <p>Insira a rua onde <span class="letra-pronome"><%= pronome %></span> cliente mora</p>
     <div class="input-group">
     	<span class="input-group-addon" id="addon-rua">Rua</span>
     	<input type="text" class="form-control" name="rua" placeholder="Rua Anônima S/A, S/N" aria-describedby="addon-rua" value="<%= rua %>">
     </div>
     <br>
-    <p>Insira o bairro onde <span class="letra-pronome">o</span> cliente mora</p>
+    <p>Insira o bairro onde <span class="letra-pronome"><%= pronome %></span> cliente mora</p>
     <div class="input-group">
     	<span class="input-group-addon" id="addon-bairro">Bairro</span>
     	<input type="text" class="form-control" name="bairro" placeholder="Candelaria Destruída" aria-describedby="addon-bairro" value="<%= bairro %>">
@@ -201,7 +204,7 @@
     	<input type="text" class="form-control" name="cidade" placeholder="Nomilândia" aria-describedby="addon-cidade" value="<%= cidade %>">
     </div>
     <br>
-    <p>Selecione o estado onde <span class="letra-pronome">o</span> cliente mora</p>
+    <p>Selecione o estado onde <span class="letra-pronome"><%= pronome %></span> cliente mora</p>
     <div class="input-group">
     	<span class="input-group-addon" id="addon-estado">Seleção de estado</span>
     	<select class="form-control" name="estado" aria-describedby="addon-estado">

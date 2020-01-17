@@ -10,8 +10,22 @@ import java.util.Calendar;
 import br.com.cledson.foibrinks.bd.ConnectionFactory;
 import br.com.cledson.foibrinks.model.pessoal.Cliente;
 import br.com.cledson.foibrinks.model.pessoal.Dependente;
+import br.com.cledson.foibrinks.model.pessoal.PessoaIncadastravelException;
+import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 
+/** DependenteDAC - Uma classe que oferece métodos para manipulação de dados dos
+ * dependentes dos clientes no banco de dados.
+ * 
+ * @author Cledson Cavalcanti
+ *
+ */
 public class DependenteDAC {
+	/** Lê os dados de um dependente através do seu código.
+	 * 
+	 * @param codigo		- autoexplicativo.
+	 * @return Dependente	- objeto com dados do dependente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static Dependente le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn
@@ -35,6 +49,12 @@ public class DependenteDAC {
 		return dep;
 	}
 
+	/** Lê os dados de um dependente através do nome e da data de nascimento.
+	 * 
+	 * @param codigo		- autoexplicativo.
+	 * @return Cliente		- objeto com dados do cliente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static Dependente lePorNomeData(Cliente cliente,
 			String nomeCompleto,
 			Calendar dataNascimento) throws SQLException {
@@ -53,6 +73,12 @@ public class DependenteDAC {
 		return dep;
 	}
 
+	/** Retorna os dependentes do cliente em uma lista.
+	 * 
+	 * @param cliente					- objeto com o código do cliente.
+	 * @return ArrayList<Dependente>	- lista de dependentes do cliente.
+	 * @throws SQLException				- erro interno ou de engenharia.
+	 */
 	public static ArrayList<Dependente> listaDependentes(Cliente cliente)
 			throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
@@ -72,8 +98,20 @@ public class DependenteDAC {
 		return dependentes;
 	}
 
+	/** Registra os dados do dependente no banco de dados.
+	 * 
+	 * @param dependente					- objeto com os dados do dependente, marcado para cadastro (isto é: código = ORIConstantes.LONG_ORI_CODIGO_CADASTRAVEL).
+	 * @throws SQLException					- erro interno ou de engenharia.
+	 * @throws PessoaIncadastravelException	- dependente já registrado.
+	 */
 	public static void registra(Dependente dependente)
-			throws SQLException {
+			throws SQLException, PessoaIncadastravelException {
+		try {
+			verificaSeExiste(dependente);
+		} catch (PessoaJaExisteException e) {
+			throw new PessoaIncadastravelException(e);
+		}
+
 		Connection conn = ConnectionFactory.getConnection();
 
 		PreparedStatement stmt = conn
@@ -91,7 +129,17 @@ public class DependenteDAC {
 		conn.close();
 	}
 
-	public static boolean salva(Dependente dependente) throws SQLException {
+	/** Atualiza os dados de um dependente existente no banco de dados.
+	 * 
+	 * @param dependente	- objeto com os dados do dependente.
+	 * @return boolean		- se alguma linha foi afetada.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 * @throws PessoaJaExisteException - outro dependente com
+	 * mesmo nome/data de nascimento já existe.
+	 */
+	public static boolean salva(Dependente dependente) throws SQLException, PessoaJaExisteException {
+		verificaSeExiste(dependente);
+
 		Connection conn = ConnectionFactory.getConnection();
 		
 		PreparedStatement stmt = conn
@@ -109,7 +157,13 @@ public class DependenteDAC {
 		conn.close();
 		return row_count > 0;
 	}
-	
+
+	/** Remove os dados de um dependente do banco de dados.
+	 * 
+	 * @param dependente	- objeto com os dados do dependente.
+	 * @return boolean		- se alguma linha foi afetada.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	public static boolean remove(Dependente dependente) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		
@@ -124,6 +178,13 @@ public class DependenteDAC {
 		return row_count > 0;
 	}
 
+	/** Converte um ResultSet para Dependente.
+	 * 
+	 * @param rs			- ResultSet da consulta ao banco.
+	 * @param cliente		- cliente possui o dependente.
+	 * @return Dependente	- objeto com os dados do dependente.
+	 * @throws SQLException - erro interno ou de engenharia.
+	 */
 	private static Dependente resultSetParaDependente(ResultSet rs,
 			Cliente cliente) throws SQLException {
 		Dependente dep = new Dependente(rs.getLong("codigo"), cliente);
@@ -140,5 +201,15 @@ public class DependenteDAC {
 			e.printStackTrace();
 		}
 		return dep;
+	}
+	
+	private static void verificaSeExiste(Dependente dependente)
+			throws SQLException, PessoaJaExisteException {
+		Dependente outro_dep = lePorNomeData(dependente.getCliente(),
+				dependente.getNomeCompleto(), dependente.getDataNascimento());
+		if (outro_dep != null)
+			if (outro_dep.getCodigo() != dependente.getCodigo())
+				throw new PessoaJaExisteException(dependente,
+						"Um dependente com mesmo nome/data de nascimento já existe.");
 	}
 }

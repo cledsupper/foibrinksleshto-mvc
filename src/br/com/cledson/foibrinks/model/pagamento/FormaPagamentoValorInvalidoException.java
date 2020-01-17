@@ -16,7 +16,7 @@ public class FormaPagamentoValorInvalidoException extends Exception {
 		final Venda VENDA = PAGAMENTO.getVenda(); 
 		String erro = "Recebeu " + VALOR + " (< 0.00) como valor de pagamento."
 				+ "\n  Venda {"
-				+ "\n    cÃ³digo: " + VENDA.getCodigo()
+				+ "\n    código: " + VENDA.getCodigo()
 				+ "\n    cliente: " + PAGAMENTO.getVenda().getCliente().getNomeCompleto()
 				+ "\n    dataVenda: " + VENDA.getDataVendaStringBr()
 				+ "\n  }";

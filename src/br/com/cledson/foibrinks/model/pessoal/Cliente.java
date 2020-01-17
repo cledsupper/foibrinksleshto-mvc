@@ -73,18 +73,13 @@ public class Cliente extends Pessoa {
 	/**
 	 * Prepara os dados do cliente para cadastro no banco de dados e chama ClienteDAO.cadastra().
 	 * 
-	 * @throws PessoaIncadastravelException
-	 * @throws ORIValorInvalidoException
-	 * @throws SQLException
+	 * @throws PessoaIncadastravelException	- outro cliente com nome/data ou CPF
+	 * alterados j· existe.
+	 * @throws SQLException					- erro interno ou de engenharia.
 	 */
 	@Override
 	public void cadastra() throws PessoaIncadastravelException, SQLException {
 		super.cadastra();
-
-		if (ClienteDAC.lePorNomeData(getNomeCompleto(), getDataNascimento()) != null)
-			throw new PessoaIncadastravelException(this, "Um cliente com mesmo nome e data de nascimento j√° existe");
-		else if (ClienteDAC.lePorCpf(this.getCpf()) != null)
-			throw new PessoaIncadastravelException(this, "Um cliente com o mesmo CPF j√° existe");
 
 		ClienteDAC.registra(this);
 	}
@@ -92,10 +87,15 @@ public class Cliente extends Pessoa {
 	/**
 	 * Verifica e salva os dados no banco de dados.
 	 * 
-	 * @throws PessoaNaoEncontradaException
+	 * @throws PessoaNaoEncontradaException	- cliente n„o existe no banco de dados.
+	 * @throws PessoaJaExisteException		- outro cliente com nome/data ou CPF
+	 * alterados j· existe.
+	 * @throws SQLException					- erro interno ou de engenharia.
 	 */
 	@Override
-	public void salva() throws PessoaNaoEncontradaException, SQLException {
+	public void salva()
+			throws PessoaNaoEncontradaException, PessoaJaExisteException,
+			SQLException {
 		super.salva();
 
 		if (ClienteDAC.salva(this) == false)

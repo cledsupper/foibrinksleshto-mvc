@@ -1,6 +1,7 @@
 package br.com.cledson.foibrinks.model.pagamento;
 
 import br.com.cledson.foibrinks.model.ORISomenteLeituraException;
+import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 import br.com.cledson.foibrinks.model.mercado.Venda;
 
 public class Cartao extends FormaPagamento {
@@ -8,8 +9,9 @@ public class Cartao extends FormaPagamento {
 
 	private final long NUMERO_CARTAO;
 
-	public Cartao(Venda venda, long numeroCartao) {
+	public Cartao(Venda venda, long numeroCartao) throws ORIValorInvalidoException {
 		super(venda);
+		CartaoValidador.validaNumeroCartao(this, numeroCartao);
 		NUMERO_CARTAO = numeroCartao;
 	}
 
@@ -22,16 +24,8 @@ public class Cartao extends FormaPagamento {
 		return FORMA;
 	}
 
-	/*
-	@Override
-	public boolean paga(double valor) throws ORISomenteLeituraException, FormaPagamentoValorInvalidoException {
-		if (!verifica())
-			return false;
-		return super.paga(valor);
-	}*/
-	
-	/** Esta fun√ß√£o verificaria se o cart√£o √© v√°lido.
-	 * Como isso est√° fora do escopo deste projeto, n√£o √© feita nenhuma verifica√ß√£o.
+	/** Esta funÁ„o verificaria se o n˙mero do cart„o È v·lido.
+	 * Como isso est· fora do escopo deste projeto, n„o È feita nenhuma verificaÁ„o.
 	 * 
 	 * @return true
 	 */

@@ -2,6 +2,8 @@ package br.com.cledson.foibrinks.model.pagamento;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.model.ORISomenteLeituraException;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 import br.com.cledson.foibrinks.model.mercado.Venda;
@@ -23,13 +25,12 @@ public class TesteFormaPagamento {
 		Venda venda = new Venda(
 				231424,
 				cliente, cal);
-		Cartao cartao = new Cartao(venda, 5825512345678901L);
 		try {
+			Cartao cartao = new Cartao(venda, 5825512345678901L);
 			venda.setPagamento(cartao);
 			cartao.setValorPago(5);
 			venda.setPagamento(null);
-		} catch (ORISomenteLeituraException
-				| FormaPagamentoValorInvalidoException e) {
+		} catch (ORIException | FormaPagamentoValorInvalidoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

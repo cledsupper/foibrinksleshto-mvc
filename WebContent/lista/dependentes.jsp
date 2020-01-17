@@ -1,13 +1,19 @@
+<%@page import="br.com.cledson.foibrinks.model.pessoal.Cliente"%>
+<%@page import="br.com.cledson.foibrinks.bd.dac.ClienteDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dac.DependenteDAC"%>
+<%@page import="br.com.cledson.foibrinks.model.pessoal.Dependente"%>
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.ProdutoDAC"%>
-<%@page import="br.com.cledson.foibrinks.model.mercado.Produto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%
+Long codigo_cliente = Long.parseLong(request.getParameter("codigo-cliente"));
+Cliente cliente = ClienteDAC.le(codigo_cliente);
+%>
 <html>
 <head>
-  <title>FoiBrinks: Produtos</title>
+  <title>FoiBrinks: Dependentes</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,7 +71,7 @@
       </button>
       <a class="navbar-brand" href="#">TAV</a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-PRODUTOS</div>
+    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-CLIENTES</div>
   </div>
 </nav>
 
@@ -73,85 +79,74 @@
 <%
 	String notifica_remocao = request.getParameter("notifica-remocao");
 	if (notifica_remocao != null)
-		out.write("<h2 class=\"aviso sucesso linha-centro\">Produto removido!</h2>");
+		out.write("<h2 class=\"aviso sucesso linha-centro\">Dependente removido!</h2>");
 
-	ArrayList<Produto> produtos = null;
+	ArrayList<Dependente> dependentes = null;
 	try {
-		produtos = ProdutoDAC.listaProdutos(true, null, null, null);
+		dependentes = DependenteDAC.listaDependentes(cliente);
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao ler dados:</h1>"
 				+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
-	if (produtos != null) {
-		if (produtos.size() == 0) { %>
-			<h1>Bem vindo!</h1>
-			<h3>Nenhum produto registrado :(</h3>
+	if (dependentes != null) { %>
+		<h1>Dependentes de <%= cliente.getNomeCompleto() %></h1>
+<%
+		if (dependentes.size() == 0) { %>
+			<h3>Nenhum dependente foi encontrado :?</h3>
 			<br>
-			<p class="linha-centro"><a href="../cadastra/produto.html"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Adicionar produto</button></a></p>
+			<p class="linha-centro"><a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a></p>
 <%
 		} else {
 %>
-		<form action="clientes.jsp" method="POST">
-		<h1>Cadastro de venda</h1>
-		<h3>Selecione os produtos</h3>
+		<h3>Dependentes</h3>
+		<br>
+		<a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a>
+
 		<table class="table">
 			<thead>
 				<tr>
-					<th colspan="6" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
+					<th colspan="6" class="observe linha-centro" scope="row">Edite ou remova dependentes</th>
 				</tr>
 				<tr>
-					<th scope="col">Adicionar</th>
-					<th scope="col">Codigo</th>
-					<th scope="col">Nome do produto</th>
-					<th scope="col">Marca</th>
-					<th scope="col">Faixa etária</th>
-					<th scope="col">Preço</th>
-					<th class="linha-centro" scope="col">Quantidade para adicionar</th>
+					<th scope="col">#</th>
+					<th scope="col">Nome do dependente</th>
+					<th scope="col">O que você quer fazer?</th>
 				</tr>
 			</thead>
 			<tbody>
 <%
-			for (int i=0; i < produtos.size(); i++) {
-				Produto produto = produtos.get(i);
-				String codigo = "" + produto.getCodigo();
-				String nome = produto.getNome();
-				String marca = produto.getMarca();
-				String faixaEtaria = "" + produto.getFaixaEtaria();
-				faixaEtaria = faixaEtaria.equals("0") ? "LIVRE" : faixaEtaria + " anos"; 
-				String preco = String.format("R$ %.2f", produto.getPreco());
+			for (int i=0; i < dependentes.size(); i++) {
+				Dependente dep = dependentes.get(i);
+				String codigo = "" + dep.getCodigo();
+				String nome = dep.getNomeCompleto();
+				String depArgs = String.format("%d, %d", cliente.getCodigo(), dep.getCodigo());
 %>
 				<tr>
-					<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
-					<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
-					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
-					<td class="linha-centro"><%= marca %></td>
-					<td class="linha-centro"><%= faixaEtaria %></td>
-					<td class="linha-direito"><%= preco %></td>
-					<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
+					<td class="coluna-centro" scope="row"><%= codigo %></td>
+					<td class="coluna-centro"><button class="btn btn-primary" onclick="detalhaDependente(<%= depArgs %>);"><%= nome %></button></td>
+					<td class="coluna-centro">
+						<button class="btn btn-warning" onclick="detalhaDependente(<%= depArgs %>)"><span class="glyphicon glyphicon-edit"></span>	Editar</button>
+						<button class="btn btn-danger" onclick="removeDependente(<%= depArgs %>)"><span class="glyphicon glyphicon-trash"></span>	Remover</button>
+					</td>
 				</tr>
 <%
 			}
 %>
 			</tbody>
 		</table>
-		<br><br>
-		<p style="text-align: center;">
-			<button id="btn-adicionar" class="btn btn-success" disabled=""><span class="glyphicon glyphicon-shopping-cart"></span>	Vender para</button></p>
 <%
 		}
 	}
 %>
 		<br><br>
-  <script src="../scripts/produto-formulario.js"></script>
-  </form>
 </div>
 
 <footer class="container-fluid text-center">
   <p id="leshto-copyright-footer-note"></p>
 </footer>
 
-<script src="../scripts/produto-gerenciamento.js"></script>
+<script src="../scripts/dependente-gerenciamento.js"></script>
 </body>
 </html>

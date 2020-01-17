@@ -50,8 +50,8 @@ public class ProdutoDAC {
 
 	/** Retorna de uma lista 
 	 * 
-	 * @param recentes - caso true, ordena a lista a partir do √∫ltimo produto cadastrado.
-	 * @param faixaEtaria - caso n√£o nulo, filtra os produtos pela faixa et√°ria indicada
+	 * @param recentes - caso true, ordena a lista a partir do ˙ltimo produto cadastrado.
+	 * @param faixaEtaria - caso n„o nulo, filtra os produtos pela faixa et·ria indicada
 	 * @param marca - caso definido, filtra os produtos pela marca
 	 * @param dataCadastro - caso definido, filtra os itens entre as datas: {0 => data inicial; 1 => data final ou tempo atual se nulo}
 	 * @return ArrayList<Produto>
@@ -67,18 +67,18 @@ public class ProdutoDAC {
 
 		String sql = "SELECT * FROM produtos";
 
-		/* Algoritmo de constru√ß√£o da String do filtro. Gambiarra? talvez...
-		 * se for gambi, garanto ser outro n√≠vel. :)
+		/* Algoritmo de construÁ„o da String do filtro. Gambiarra? talvez...
+		 * se for gambi, garanto ser outro nÌ≠vel. :)
 		 * 
-		 * Um √≠ndice √© definido abaixo do anterior. */
+		 * Um Ìndice È definido abaixo do anterior. */
 		int faixaEtariaIndice = 0;
 		int marcaIndice = 0;
 		int datasIndice = 0;
 		if (faixaEtaria != null || marca != null || datas != null) {
-			/* Come√ßamos de 0 */
+			/* ComeÁamos de 0... */
 			int proximo = 0;
 			sql += " WHERE";
-			/* (atributo) passado como par√¢metro? ent√£o incrementa (proximo) e atribui ao seu √≠ndice respectivo. */
+			/* (atributo) passado como par‚metro? ent„o incrementa (proximo) e atribui ao seu Ìndice respectivo. */
 			if (faixaEtaria != null) {
 				proximo++;
 				faixaEtariaIndice = proximo;
@@ -103,8 +103,8 @@ public class ProdutoDAC {
 		PreparedStatement stmt = conn
 				.prepareStatement(sql);
 
-		/* Se um √≠ndice √© diferente de 0, √© porque h√° um filtro pro seu elemento,
-		 * ent√£o setamos o par√¢metro para o Statement de acordo com o seu √≠ndice. */
+		/* Se um Ìndice È diferente de 0, È porque h· um filtro pro seu elemento,
+		 * ent„o setamos o par‚metro para o Statement de acordo com o seu Ìndice. */
 		if (faixaEtariaIndice != 0)
 			stmt.setShort(faixaEtariaIndice, faixaEtaria);
 		if (marcaIndice != 0)
@@ -112,7 +112,8 @@ public class ProdutoDAC {
 		if (datasIndice != 0) {
 			stmt.setDate(datasIndice+0, new java.sql.Date(datas[0].getTimeInMillis()));
 			stmt.setDate(datasIndice+1, new java.sql.Date(
-					datas[1] != null ? datas[1].getTimeInMillis()
+					datas[1] != null ?
+							datas[1].getTimeInMillis()
 							: Calendar.getInstance().getTimeInMillis()));
 		}
 

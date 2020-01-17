@@ -1,5 +1,6 @@
 package br.com.cledson.foibrinks.model.pessoal;
 
+import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.model.ORIIncadastravelException;
 
 public class PessoaIncadastravelException extends ORIIncadastravelException {
@@ -8,7 +9,7 @@ public class PessoaIncadastravelException extends ORIIncadastravelException {
 				pessoa.getClass().getSimpleName().toLowerCase()));
 	}
 
-	public PessoaIncadastravelException(Pessoa pessoa, String erro) {
-		super(pessoa, erro);
+	public PessoaIncadastravelException(ORIException e) {
+		super(e);
 	}
 }

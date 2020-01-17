@@ -5,12 +5,16 @@ package br.com.cledson.foibrinks.model;
  * @author Cledson Cavalcanti
  */
 public class ORIIncadastravelException extends ORIException {
-	
+
 	public ORIIncadastravelException(ORI ori) {
 		super(ori, ORIConstantes.STRING_ERRO_ORI_INCADASTRAVEL);
 	}
-	
+
 	public ORIIncadastravelException(ORI ori, String mensagem) {
 		super(ori, mensagem);
+	}
+
+	public ORIIncadastravelException(ORIException e) {
+		super(e);
 	}
 }

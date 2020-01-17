@@ -41,12 +41,14 @@ public abstract class Pessoa extends ORI {
 		}
 	}
 	
-	/** MÃ©todo para alterar os dados no banco de dados.
+	/** Método para alterar os dados no banco de dados.
 	 * 
 	 * @throws PessoaNaoEncontradaException
+	 * @throws PessoaJaException 
 	 */
 	@Override
-	public void salva() throws PessoaNaoEncontradaException, SQLException {
+	public void salva()
+			throws PessoaNaoEncontradaException, PessoaJaExisteException, SQLException {
 		try {
 			super.salva();
 		} catch (ORIException e) {
