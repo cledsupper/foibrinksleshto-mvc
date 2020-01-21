@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ProdutoDAC;
+import br.com.cledson.foibrinks.bd.dao.ProdutoDAO;
 import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.mvc.Constantes;
 
@@ -17,7 +17,7 @@ public class RemoveProdutoAcao implements Acao {
 		Long codigo = Long.parseLong(req.getParameter("codigo"));
 
 		try {
-			ProdutoDAC.le(codigo).remove();
+			ProdutoDAO.le(codigo).remove();
 		}
 		catch (ORIException e) {
 			e.printStackTrace();

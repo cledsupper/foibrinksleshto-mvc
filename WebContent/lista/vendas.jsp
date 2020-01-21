@@ -1,69 +1,17 @@
-<%@page import="br.com.cledson.foibrinks.bd.dac.VendaDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.VendaDAO"%>
 <%@page import="br.com.cledson.foibrinks.model.mercado.Venda"%>
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="br.com.cledson.foibrinks.model.mercado.Produto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>FoiBrinks: Vendas</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <!-- Script que conserta a página como eu quero -->
-  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
- 
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-
-  <!-- Para estilizar os formulários do jeito que eu quero. -->
-  <link rel="stylesheet" href="../css/formularios.css">
-</head>
-<body>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>FoiBrinks</h1>      
-    <p>Terminal de Atendimento do Vendedor</p>
-  </div>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="..">TAV</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-VENDAS</div>
-  </div>
-</nav>
+<c:import url="../cabecalho.jsp"/>
+<script>
+	document.title = "FoiBrinks: Vendas";
+	document.getElementById("myNavbar").innerHTML = "P-LISTA-VENDAS";
+</script>
 
 <div class="container">
 <%
@@ -72,15 +20,16 @@
 		out.write("<h2 class=\"aviso sucesso linha-centro\">Venda removida!</h2>");
 	ArrayList<Venda> vendas = null;
 	try {
-		vendas = VendaDAC.listaVendas();
+		vendas = VendaDAO.listaVendas();
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao listar vendas</h1>"
-					+ "<h3>O banco de dados está conectado?</h3>");
+			+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	if (vendas != null) {
-		if (vendas.size() == 0) { %>
+		if (vendas.size() == 0) {
+%>
 			<h1>Nenhuma venda cadastrada :(</h1>
 			<br>
 			<p class="linha-centro"><a href="produtos.jsp"><button class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>	Vender</button></a></p>
@@ -141,11 +90,7 @@
 	<br><br>
 </div>
 
-<footer class="container-fluid text-center">
-  <p id="leshto-copyright-footer-note"></p>
-</footer>
-
 <script src="../scripts/cliente-gerenciamento.js"></script>
 <script src="../scripts/venda-gerenciamento.js"></script>
-</body>
-</html>
+
+<c:import url="../rodape.jsp"/>

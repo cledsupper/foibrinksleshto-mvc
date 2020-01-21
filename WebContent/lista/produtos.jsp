@@ -1,73 +1,16 @@
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.ProdutoDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.ProdutoDAO"%>
 <%@page import="br.com.cledson.foibrinks.model.mercado.Produto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>FoiBrinks: Produtos</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<c:import url="../cabecalho.jsp"/>
 
-  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <!-- USAR CACHE PARA TESTAR EM DESENVOLVIMENTO QUANDO OFFLINE
-  <link rel="stylesheet" href="/foiBrinksLeshto/cache/bootstrap.min.css">
-  <script src="/foiBrinksLeshto/cache/jquery.min.js"></script>
-  <script src="/foiBrinksLeshto/cache/bootstrap.min.js"></script>
-  -->
-  <!-- Script que conserta a página como eu quero -->
-  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
- 
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-
-  <!-- Para estilizar os formulários do jeito que eu quero. -->
-  <link rel="stylesheet" href="../css/formularios.css">
-</head>
-<body>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>FoiBrinks</h1>      
-    <p>Terminal de Atendimento do Vendedor</p>
-  </div>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">TAV</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-PRODUTOS</div>
-  </div>
-</nav>
+<script>
+	document.getElementById("myNavbar").innerHTML = "P-LISTA-PRODUTOS";
+</script>
 
 <div class="container">
 <%
@@ -77,15 +20,16 @@
 
 	ArrayList<Produto> produtos = null;
 	try {
-		produtos = ProdutoDAC.listaProdutos(true, null, null, null);
+		produtos = ProdutoDAO.listaProdutos(true, null, null, null);
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao ler dados:</h1>"
-				+ "<h3>O banco de dados está conectado?</h3>");
+		+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	if (produtos != null) {
-		if (produtos.size() == 0) { %>
+		if (produtos.size() == 0) {
+%>
 			<h1>Bem vindo!</h1>
 			<h3>Nenhum produto registrado :(</h3>
 			<br>
@@ -144,14 +88,10 @@
 	}
 %>
 		<br><br>
-  <script src="../scripts/produto-formulario.js"></script>
   </form>
 </div>
 
-<footer class="container-fluid text-center">
-  <p id="leshto-copyright-footer-note"></p>
-</footer>
-
+<script src="../scripts/produto-formulario.js"></script>
 <script src="../scripts/produto-gerenciamento.js"></script>
-</body>
-</html>
+
+<c:import url="../rodape.jsp"/>

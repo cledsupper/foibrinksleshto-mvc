@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.DependenteDAC;
+import br.com.cledson.foibrinks.bd.dao.DependenteDAO;
 import br.com.cledson.foibrinks.model.pessoal.PessoaNaoEncontradaException;
 import br.com.cledson.foibrinks.mvc.Constantes;
 
@@ -18,7 +18,7 @@ public class RemoveDependenteAcao implements Acao {
 		Long codigo = Long.parseLong(req.getParameter("codigo"));
 
 		try {
-			DependenteDAC.le(codigo).remove();
+			DependenteDAO.le(codigo).remove();
 		} catch (PessoaNaoEncontradaException | SQLException e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao remover dependente:\n"

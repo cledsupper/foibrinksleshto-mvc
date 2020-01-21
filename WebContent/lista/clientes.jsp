@@ -1,68 +1,15 @@
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="br.com.cledson.foibrinks.model.pessoal.Cliente"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.ClienteDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.ClienteDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>FoiBrinks: Clientes</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="../cabecalho.jsp"/>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <!-- Script que conserta a página como eu quero -->
-  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
- 
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-
-  <!-- Para estilizar os formulários do jeito que eu quero. -->
-  <link rel="stylesheet" href="../css/formularios.css">
-</head>
-<body>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>FoiBrinks</h1>      
-    <p>Terminal de Atendimento do Vendedor</p>
-  </div>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="..">TAV</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-CLIENTES</div>
-  </div>
-</nav>
+<script>
+	document.getElementById("myNavbar").innerHTML = "P-LISTA-CLIENTES";
+</script>
 
 <div class="container">
 <%
@@ -71,15 +18,16 @@
 		out.write("<h2 class=\"aviso sucesso linha-centro\">Cliente removido!</h2>");
 	ArrayList<Cliente> clientes = null;
 	try {
-		clientes = ClienteDAC.listaClientes(true);
+		clientes = ClienteDAO.getLista(true);
 	} catch (Exception e) {
 		out.println("<h1 class=\"erro\">Erro ao listar clientes</h1>\n"
-				+ "<h3>O banco de dados está conectado?</h3>");
+		+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
 	/* BLOCO-CLIENTES-NAO-NULL */
 	if (clientes != null) {
-		if (clientes.size() == 0) {%>
+		if (clientes.size() == 0) {
+%>
 			<h1>Nenhum cliente cadastrado :(</h1>
 			<br>
 			<p class="linha-centro"><a href="../cadastra/cliente.html"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Adicionar cliente</button></a></p>
@@ -93,6 +41,7 @@
 			if (produtos_codigos != null) {
 				String[] produtos_qtds = request.getParameterValues("produto-qtd");
 %>
+				<script>document.title = "FoiBrinks: Venda";</script>
 				<form action="../control" method="POST">
 			    	<input type="hidden" name="acao" value="CadastraVendaAcao">
 <%				for (int i=0; i < produtos_codigos.length; i++) { %>
@@ -144,30 +93,13 @@
 						<button id="btn-vender" class="btn btn-success" disabled=""><span class="glyphicon glyphicon-shopping-cart"></span>	Registrar venda</button>
 					</p>
 				</form>
-				<script>document.title = "FoiBrinks: Venda"</script>
-				<script>
-					function tornaForma(tipo) {
-						var campo_numero_cartao = $('#campo-numero-cartao');
-						if (tipo == 'C')
-							campo_numero_cartao[0].outerHTML = campo_numero_cartao[0].outerHTML
-								.replace('disabled', 'required');
-						else campo_numero_cartao[0].outerHTML = campo_numero_cartao[0].outerHTML
-								.replace('required', 'disabled');
-					};
-	
-					botaoVenderLiberado = false;
-					function ativaBotao() {
-						if (botaoVenderLiberado)
-							return;
-						var btn_vender = $('#btn-vender');
-						btn_vender[0].outerHTML = btn_vender[0].outerHTML.replace('disabled=""', '');
-						botaoVenderLiberado = true;
-					};
-				</script>
+
+				<script src="../scripts/venda-formulario.js"></script>
 <%			} /* } BLOCO-VENDA */
 
-			else { /* BLOCO-CLIENTES { */
+			else { /* BLOCO-CLIENTES */
 %>
+				<script>document.title = "FoiBrinks: Clientes";</script>
 				<h1>Clientes</h1>
 				<h3>Na lista abaixo, você pode atualizar ou remover os dados de um cliente</h3>
 				<table class="table">
@@ -181,7 +113,7 @@
 							<th scope="col">O que você quer fazer?</th>
 						</tr>
 					</thead>
-				<tbody>
+					<tbody>
 <%
 				for (int i=0; i < clientes.size(); i++) {
 					String codigo = "" + clientes.get(i).getCodigo();
@@ -200,12 +132,11 @@
 						</td>
 					</tr>
 <%
-	}
+				}
 %>
-				</tbody>
-			</table>
-			<script>document.title = "FoiBrinks: Clientes";</script>
-			<script src="../scripts/cliente-gerenciamento.js"></script>
+					</tbody>
+				</table>
+				<script src="../scripts/cliente-gerenciamento.js"></script>
 <%
 			} /* BLOCO-CLIENTES */
 		} /* BLOCO-EXISTEM-CLIENTES */
@@ -214,9 +145,4 @@
 	<br><br>
 </div>
 
-<footer class="container-fluid text-center">
-  <p id="leshto-copyright-footer-note"></p>
-</footer>
-
-</body>
-</html>
+<c:import url="../rodape.jsp"/>

@@ -1,4 +1,4 @@
-package br.com.cledson.foibrinks.bd.dac;
+package br.com.cledson.foibrinks.bd.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,17 +15,20 @@ import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 /** ClienteDAO - Uma classe que oferece métodos para manipulação de dados dos
  * clientes no banco de dados.
  * 
+ * OBS.: por DAO ser um padrão de projeto, e ter a necessidade de uso com as páginas JSP deste projeto,
+ * decidi retornar a ele.
+ * 
  * @author Cledson Cavalcanti
  *
  */
-public class ClienteDAC {
+public class ClienteDAO {
 	/** Lê os dados de um cliente através do código.
 	 * 
 	 * @param codigo		- autoexplicativo.
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente le(long codigo) throws SQLException {
+	public static Cliente getCliente(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
 		PreparedStatement stmt = conn
@@ -46,7 +49,7 @@ public class ClienteDAC {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente lePorNomeData(String nomeCompleto,
+	public static Cliente getClientePorNomeData(String nomeCompleto,
 			Calendar dataNascimento) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
@@ -71,7 +74,7 @@ public class ClienteDAC {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente lePorCpf(String cpf) throws SQLException {
+	public static Cliente getClientePorCpf(String cpf) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
 		PreparedStatement stmt = conn
@@ -92,7 +95,7 @@ public class ClienteDAC {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static ArrayList<Cliente> pesquisaPorNome(String nome) throws SQLException {
+	public static ArrayList<Cliente> getListaPorNome(String nome) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		PreparedStatement stmt = conn
@@ -115,7 +118,7 @@ public class ClienteDAC {
 	 * @return ArrayList<Cliente>	- uma lista de clientes.
 	 * @throws SQLException			- erro interno ou de engenharia.
 	 */
-	public static ArrayList<Cliente> listaClientes(boolean recentes)
+	public static ArrayList<Cliente> getLista(boolean recentes)
 		throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		String sql = "SELECT * FROM clientes";
@@ -243,14 +246,14 @@ public class ClienteDAC {
 	 */
 	public static void verificaSeExiste(Cliente cliente)
 			throws PessoaJaExisteException, SQLException {
-		Cliente outro_cliente = lePorNomeData(cliente.getNomeCompleto(),
+		Cliente outro_cliente = getClientePorNomeData(cliente.getNomeCompleto(),
 				cliente.getDataNascimento());
 		if (outro_cliente != null)
 			if (outro_cliente.getCodigo() != cliente.getCodigo())
 				throw new PessoaJaExisteException(cliente,
 					"Outro cliente com mesmo nome e data de nascimentos já existe.");
 
-		outro_cliente = lePorCpf(cliente.getCpf());
+		outro_cliente = getClientePorCpf(cliente.getCpf());
 		if (outro_cliente != null)
 			if (outro_cliente.getCodigo() != cliente.getCodigo())
 				throw new PessoaJaExisteException(cliente,

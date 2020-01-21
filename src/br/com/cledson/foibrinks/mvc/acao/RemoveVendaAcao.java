@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.VendaDAC;
+import br.com.cledson.foibrinks.bd.dao.VendaDAO;
 import br.com.cledson.foibrinks.model.mercado.Venda;
 import br.com.cledson.foibrinks.mvc.Constantes;
 
@@ -16,7 +16,7 @@ public class RemoveVendaAcao implements Acao {
 		
 		Venda venda = null;
 		try {
-			venda = VendaDAC.le(codigo);
+			venda = VendaDAO.le(codigo);
 			venda.remove();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.DependenteDAC;
+import br.com.cledson.foibrinks.bd.dao.DependenteDAO;
 import br.com.cledson.foibrinks.model.pessoal.Dependente;
 import br.com.cledson.foibrinks.model.pessoal.PessoaValidador;
 import br.com.cledson.foibrinks.mvc.Constantes;
@@ -24,7 +24,7 @@ public class AtualizaDependenteAcao implements Acao {
 
 		Dependente dep;
 		try {
-			dep = DependenteDAC.le(codigo);
+			dep = DependenteDAO.le(codigo);
 			dep.setNomeCompleto(nomeCompleto);
 			dep.setDataNascimentoHTML(dataNascimentoHTML);
 			dep.setGenero(PessoaValidador.generoOutro(combo_genero) ?

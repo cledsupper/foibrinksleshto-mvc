@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.model.mercado;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import br.com.cledson.foibrinks.bd.dac.ProdutoDAC;
+import br.com.cledson.foibrinks.bd.dao.ProdutoDAO;
 import br.com.cledson.foibrinks.model.ORI;
 import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.model.ORIIncadastravelException;
@@ -44,7 +44,7 @@ public class Produto extends ORI {
 	 * @throws SQLException
 	 */
 	public static Produto procura(long codigo) throws SQLException {
-		return ProdutoDAC.le(codigo);
+		return ProdutoDAO.le(codigo);
 	}
 
 	@Override
@@ -52,21 +52,21 @@ public class Produto extends ORI {
 			SQLException {
 		super.cadastra();
 
-		ProdutoDAC.registra(this);
+		ProdutoDAO.registra(this);
 	}
 
 	@Override
 	public void salva() throws ORIException, SQLException {
 		super.salva();
 
-		ProdutoDAC.salva(this);
+		ProdutoDAO.salva(this);
 	}
 
 	@Override
 	public void remove() throws ORIException, SQLException {
 		super.remove();
 
-		ProdutoDAC.remove(this);
+		ProdutoDAO.remove(this);
 	}
 	
 	@Override

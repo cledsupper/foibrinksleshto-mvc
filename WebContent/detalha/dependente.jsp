@@ -1,8 +1,8 @@
 <%@page import="br.com.cledson.foibrinks.model.pessoal.PessoaConstantes"%>
 <%@page import="br.com.cledson.foibrinks.model.pessoal.PessoaValidador"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.ClienteDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.ClienteDAO"%>
 <%@page import="br.com.cledson.foibrinks.model.pessoal.Dependente"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.DependenteDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.DependenteDAO"%>
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="br.com.cledson.foibrinks.model.pessoal.PessoaNaoEncontradaException"%>
 <%@page import="java.sql.SQLException"%>
@@ -15,8 +15,8 @@ Long codigo = Long.parseLong(request.getParameter("codigo"));
 Cliente cliente = null;
 Dependente dep = null;
 try {
-	cliente = ClienteDAC.le(codigo_cliente);
-	dep = DependenteDAC.le(codigo);
+	cliente = ClienteDAO.getCliente(codigo_cliente);
+	dep = DependenteDAO.le(codigo);
 } catch (Exception e) {}
 %>
 <!DOCTYPE html>

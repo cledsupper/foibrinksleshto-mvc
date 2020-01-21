@@ -3,7 +3,7 @@
 <%@page import="br.com.cledson.foibrinks.model.mercado.Produto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="br.com.cledson.foibrinks.model.mercado.ProdutoAdicionador"%>
-<%@page import="br.com.cledson.foibrinks.bd.dac.VendaDAC"%>
+<%@page import="br.com.cledson.foibrinks.bd.dao.VendaDAO"%>
 <%@page import="br.com.cledson.foibrinks.model.mercado.Venda"%>
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -13,7 +13,7 @@
 	Long codigo = Long.parseLong(string_codigo);
 	Venda venda = null;
 	try {
-		venda = VendaDAC.le(codigo);
+		venda = VendaDAO.le(codigo);
 	} catch (Exception e) {}
 %>
 <!DOCTYPE html>

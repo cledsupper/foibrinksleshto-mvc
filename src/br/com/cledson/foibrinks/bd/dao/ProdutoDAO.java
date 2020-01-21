@@ -1,4 +1,4 @@
-package br.com.cledson.foibrinks.bd.dac;
+package br.com.cledson.foibrinks.bd.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import br.com.cledson.foibrinks.model.mercado.Dimensao;
  * 
  * @author Cledson Cavalcanti
  */
-public class ProdutoDAC {
+public class ProdutoDAO {
 	public static Produto le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn

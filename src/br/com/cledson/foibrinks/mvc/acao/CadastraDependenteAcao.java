@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ClienteDAC;
+import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 import br.com.cledson.foibrinks.model.pessoal.Cliente;
 import br.com.cledson.foibrinks.model.pessoal.Dependente;
@@ -36,7 +36,7 @@ public class CadastraDependenteAcao implements Acao {
 		Long codigo_cliente = Long.parseLong(codigo_cliente_string);
 		Cliente cliente = null;
 		try {
-			cliente = ClienteDAC.le(codigo_cliente);
+			cliente = ClienteDAO.getCliente(codigo_cliente);
 			cliente.adicionaDependente(dependente);
 		} catch (Exception e) {
 			e.printStackTrace();

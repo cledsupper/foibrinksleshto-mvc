@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ClienteDAC;
+import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
 import br.com.cledson.foibrinks.model.mercado.Produto;
 import br.com.cledson.foibrinks.model.mercado.Venda;
 import br.com.cledson.foibrinks.model.pagamento.Cartao;
@@ -24,7 +24,7 @@ public class CadastraVendaAcao implements Acao {
 
 		Cliente cliente = null;
 		try {
-			cliente = ClienteDAC.le(Long.parseLong(cliente_radio));
+			cliente = ClienteDAO.getCliente(Long.parseLong(cliente_radio));
 			Venda venda = new Venda(cliente);
 
 			for (int i=0; i < produtos_codigos.length; i++) {

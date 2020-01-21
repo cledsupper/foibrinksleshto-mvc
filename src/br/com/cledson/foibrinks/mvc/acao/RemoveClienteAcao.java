@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ClienteDAC;
+import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
 import br.com.cledson.foibrinks.model.pessoal.PessoaNaoEncontradaException;
 import br.com.cledson.foibrinks.mvc.Constantes;
 
@@ -17,7 +17,7 @@ public class RemoveClienteAcao implements Acao {
 		Long codigo = Long.parseLong(req.getParameter("codigo"));
 
 		try {
-			ClienteDAC.le(codigo).remove();
+			ClienteDAO.getCliente(codigo).remove();
 		} catch (PessoaNaoEncontradaException | SQLException e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao remover cliente:\n"

@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ClienteDAC;
+import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
 import br.com.cledson.foibrinks.model.ORIUtilitarios;
 import br.com.cledson.foibrinks.model.pessoal.Cliente;
 import br.com.cledson.foibrinks.mvc.Constantes;
@@ -28,7 +28,7 @@ public class AtualizaClienteAcao implements Acao {
 		String estado = req.getParameter("estado");
 
 		try {
-			Cliente cliente = ClienteDAC.le(codigo);
+			Cliente cliente = ClienteDAO.getCliente(codigo);
 
 			cliente.setNomeCompleto(nome);
 			cliente.setDataNascimentoHTML(data_nascimento);

@@ -3,7 +3,7 @@ package br.com.cledson.foibrinks.mvc.acao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.cledson.foibrinks.bd.dac.ProdutoDAC;
+import br.com.cledson.foibrinks.bd.dao.ProdutoDAO;
 import br.com.cledson.foibrinks.model.mercado.Dimensao;
 import br.com.cledson.foibrinks.model.mercado.Produto;
 import br.com.cledson.foibrinks.mvc.Constantes;
@@ -27,7 +27,7 @@ public class AtualizaProdutoAcao implements Acao {
 
 		try {
 			Produto produto = Produto.procura(codigo);
-			Produto produto_2 = ProdutoDAC.lePorNomeMarca(nome, marca);
+			Produto produto_2 = ProdutoDAO.lePorNomeMarca(nome, marca);
 			if (produto_2 != null)
 				if (produto.getCodigo() != produto_2.getCodigo()) {
 					res.getWriter().write("ERRO AO ATUALIZAR DADOS DO PRODUTO: produto com mesmo nome e marca já existe!");

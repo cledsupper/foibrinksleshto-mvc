@@ -2,7 +2,7 @@ package br.com.cledson.foibrinks.model.pessoal;
 
 import java.sql.SQLException;
 
-import br.com.cledson.foibrinks.bd.dac.DependenteDAC;
+import br.com.cledson.foibrinks.bd.dao.DependenteDAO;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 
 public class Dependente extends Pessoa {
@@ -57,7 +57,7 @@ public class Dependente extends Pessoa {
 		if (CLIENTE.cadastravel())
 			throw new PessoaIncadastravelException(this);
 
-		DependenteDAC.registra(this);
+		DependenteDAO.registra(this);
 	}
 	
 	/** Salva as alterações nos dados do dependete já cadastrado.
@@ -74,7 +74,7 @@ public class Dependente extends Pessoa {
 			throws PessoaNaoEncontradaException, PessoaJaExisteException, SQLException {
 		super.salva();
 
-		if (DependenteDAC.salva(this) == false)
+		if (DependenteDAO.salva(this) == false)
 			throw new PessoaNaoEncontradaException(this);
 	}
 
@@ -86,7 +86,7 @@ public class Dependente extends Pessoa {
 	 */
 	@Override
 	public void remove() throws PessoaNaoEncontradaException, SQLException {
-		if (DependenteDAC.remove(this) == false)
+		if (DependenteDAO.remove(this) == false)
 			throw new PessoaNaoEncontradaException(this);
 
 	}

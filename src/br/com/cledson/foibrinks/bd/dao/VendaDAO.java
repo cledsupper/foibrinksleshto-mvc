@@ -1,4 +1,4 @@
-package br.com.cledson.foibrinks.bd.dac;
+package br.com.cledson.foibrinks.bd.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import br.com.cledson.foibrinks.model.pagamento.Dinheiro;
 import br.com.cledson.foibrinks.model.pagamento.FormaPagamentoValorInvalidoException;
 import br.com.cledson.foibrinks.model.pessoal.Cliente;
 
-public class VendaDAC {
+public class VendaDAO {
 	public static Venda le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement stmt = conn
@@ -162,7 +162,7 @@ public class VendaDAC {
 	private static ProdutoAdicionador resultSetParaProdutoAdicionador(
 			Venda venda, ResultSet rs) throws SQLException {
 		long codigo_produto = rs.getLong("codigo_produto");
-		Produto produto = ProdutoDAC.le(codigo_produto);
+		Produto produto = ProdutoDAO.le(codigo_produto);
 
 		ProdutoAdicionador adicao = new ProdutoAdicionador(venda, produto);
 		adicao.setQtdProdutos(rs.getInt("qtd_produtos"));
@@ -173,7 +173,7 @@ public class VendaDAC {
 	private static Venda resultSetParaVenda(ResultSet rs) throws SQLException {
 		long codigo_cliente = rs.getLong("codigo_cliente");
 		long codigo = rs.getLong("codigo");
-		Cliente cliente = ClienteDAC.le(codigo_cliente);
+		Cliente cliente = ClienteDAO.getCliente(codigo_cliente);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(rs.getDate("data_venda"));
 

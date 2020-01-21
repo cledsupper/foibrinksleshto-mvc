@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import br.com.cledson.foibrinks.bd.dac.VendaDAC;
+import br.com.cledson.foibrinks.bd.dao.VendaDAO;
 import br.com.cledson.foibrinks.model.ORIConstantes;
 import br.com.cledson.foibrinks.model.ORI;
 import br.com.cledson.foibrinks.model.ORIException;
@@ -53,7 +53,7 @@ public class Venda extends ORI {
 	 * @return procuraPorCliente(cliente.getCodigo());
 	 */
 	public static Venda[] procuraPorCliente(Cliente cliente) {
-		return VendaDAC.listaPorCliente(cliente);
+		return VendaDAO.listaPorCliente(cliente);
 	}
 
 	/** Registra os dados da venda, ProdutoAdicionador e FormaPagamento no banco de dados.
@@ -65,7 +65,7 @@ public class Venda extends ORI {
 	@Override
 	public void cadastra() throws ORIIncadastravelException, ORIException, SQLException {
 		super.cadastra();
-		VendaDAC.registra(this);
+		VendaDAO.registra(this);
 	}
 
 	/** Salvaria os dados de pagamento, mas isso não é permitido.
@@ -83,7 +83,7 @@ public class Venda extends ORI {
 	 */
 	@Override
 	public void remove() throws ORIException, SQLException {
-		VendaDAC.remove(this);
+		VendaDAO.remove(this);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class Venda extends ORI {
 			if (cadastravel())
 				return null;
 			else
-				carrinho = VendaDAC.leCarrinho(this);
+				carrinho = VendaDAO.leCarrinho(this);
 		}
 		return carrinho;
 	}
@@ -143,7 +143,7 @@ public class Venda extends ORI {
 			}
 		}
 		else
-			custo = VendaDAC.geraCustoTotal(this);
+			custo = VendaDAO.geraCustoTotal(this);
 		return custo;
 	}
 

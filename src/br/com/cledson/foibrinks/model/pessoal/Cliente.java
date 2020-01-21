@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import br.com.cledson.foibrinks.bd.dac.ClienteDAC;
-import br.com.cledson.foibrinks.bd.dac.DependenteDAC;
+import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
+import br.com.cledson.foibrinks.bd.dao.DependenteDAO;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 import br.com.cledson.foibrinks.model.ORIUtilitarios;
 
@@ -33,23 +33,23 @@ public class Cliente extends Pessoa {
 	}
 
 	public static Cliente procura(long codigo) throws SQLException {
-		return ClienteDAC.le(codigo);
+		return ClienteDAO.getCliente(codigo);
 	}
 
 	public static Cliente procuraPorCPF(String cpf) throws SQLException {
 		String cpfOk = ClienteValidador.paraCpfOk(cpf);
 		if (cpfOk != null)
-			return ClienteDAC.lePorCpf(cpfOk);
+			return ClienteDAO.getClientePorCpf(cpfOk);
 
 		return null;
 	}
 
 	public static Cliente[] procuraPorNome(String nome) throws SQLException {
-		return (Cliente[]) ClienteDAC.pesquisaPorNome(nome).toArray();
+		return (Cliente[]) ClienteDAO.getListaPorNome(nome).toArray();
 	}
 
 	public static Cliente procuraPorNomeData(String nome, Calendar data) throws SQLException {
-		return ClienteDAC.lePorNomeData(nome, data);
+		return ClienteDAO.getClientePorNomeData(nome, data);
 	}
 
 	public void adicionaDependente(Dependente dep)
@@ -81,7 +81,7 @@ public class Cliente extends Pessoa {
 	public void cadastra() throws PessoaIncadastravelException, SQLException {
 		super.cadastra();
 
-		ClienteDAC.registra(this);
+		ClienteDAO.registra(this);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class Cliente extends Pessoa {
 			SQLException {
 		super.salva();
 
-		if (ClienteDAC.salva(this) == false)
+		if (ClienteDAO.salva(this) == false)
 			throw new PessoaNaoEncontradaException(this);
 	}
 
@@ -112,12 +112,12 @@ public class Cliente extends Pessoa {
 	public void remove() throws PessoaNaoEncontradaException, SQLException {
 		super.remove();
 
-		if (ClienteDAC.remove(getCodigo()) == false)
+		if (ClienteDAO.remove(getCodigo()) == false)
 			throw new PessoaNaoEncontradaException(this);
 	}
 
 	public ArrayList<Dependente> getDependentes() throws SQLException {
-		return DependenteDAC.listaDependentes(this);
+		return DependenteDAO.listaDependentes(this);
 	}
 
 	public Calendar getDataCadastro() {

@@ -1,4 +1,4 @@
-package br.com.cledson.foibrinks.bd.dac;
+package br.com.cledson.foibrinks.bd.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
  * @author Cledson Cavalcanti
  *
  */
-public class DependenteDAC {
+public class DependenteDAO {
 	/** Lê os dados de um dependente através do seu código.
 	 * 
 	 * @param codigo		- autoexplicativo.
