@@ -13,7 +13,7 @@ import br.com.cledson.foibrinks.model.pessoal.Dependente;
 import br.com.cledson.foibrinks.model.pessoal.PessoaIncadastravelException;
 import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 
-/** DependenteDAC - Uma classe que oferece métodos para manipulação de dados dos
+/** DependenteDAC - uma classe que oferece métodos para manipulação de dados dos
  * dependentes dos clientes no banco de dados.
  * 
  * @author Cledson Cavalcanti
@@ -181,7 +181,7 @@ public class DependenteDAC {
 	/** Converte um ResultSet para Dependente.
 	 * 
 	 * @param rs			- ResultSet da consulta ao banco.
-	 * @param cliente		- cliente possui o dependente.
+	 * @param cliente		- cliente responsável pelo dependente.
 	 * @return Dependente	- objeto com os dados do dependente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
@@ -203,6 +203,14 @@ public class DependenteDAC {
 		return dep;
 	}
 	
+	/** Verifica pela existência de um dependente.
+	 * 
+	 * NOTA: os dados verificados são o nome completo e a data de nascimento. 
+	 * 
+	 * @param dependente				- objeto com dados de dependente.
+	 * @throws SQLException				- erro interno ou de engenharia
+	 * @throws PessoaJaExisteException	- dependente com mesmos dados já existe.
+	 */
 	private static void verificaSeExiste(Dependente dependente)
 			throws SQLException, PessoaJaExisteException {
 		Dependente outro_dep = lePorNomeData(dependente.getCliente(),

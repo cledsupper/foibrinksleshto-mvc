@@ -11,6 +11,10 @@ import br.com.cledson.foibrinks.bd.ConnectionFactory;
 import br.com.cledson.foibrinks.model.mercado.Produto;
 import br.com.cledson.foibrinks.model.mercado.Dimensao;
 
+/** ProdutoDAC - uma classe que oferece métodos para manipulação de dados dos produtos no banco de dados.
+ * 
+ * @author Cledson Cavalcanti
+ */
 public class ProdutoDAC {
 	public static Produto le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();

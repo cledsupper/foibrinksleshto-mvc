@@ -12,54 +12,8 @@ import br.com.cledson.foibrinks.model.pessoal.Cliente;
 import br.com.cledson.foibrinks.model.pessoal.PessoaIncadastravelException;
 import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 
-/** ClienteDAC - Uma classe que oferece métodos para manipulação de dados dos
+/** ClienteDAO - Uma classe que oferece métodos para manipulação de dados dos
  * clientes no banco de dados.
- * <br>
- * <br>
- * <h1>Por quê DAC (Data Access Class) e não DAO (Data Access Object)?</h1>
- * <p>Não estou usando o padrão DAO (Data Access Object) de propósito,
- * porque NÃO É ÚTIL instanciar um objeto apenas para usar uma função/
- * procedimento (f/p) que nem utiliza ele para funcionar.</p>
- * <br><br>
- * <h2>O que são métodos?<h2>
- * <p>Métodos no paradigma de programação orientada a objetos existem
- * por uma justificativa: se há <strong>um</strong> (<strong>1</strong>
- * ) objeto com atributos que caracterizam ele de tal maneira (em uma
- * palavra: "ESTADO" do objeto), e uma função/procedimento DEPENDE do
- * estado desse objeto e OPERA sobre ele ou representa o seu
- * comportamento, então ela deve ser declarada/definida como um método.</p>
- * <br>
- * <h3>Expressão lógica que define esse axioma, onde "foo" se refere a
- * uma f/p:</h3>
- * <blockquote>foo.depends_of(object) ^ (foo.operates_in(object) OR foo
- * .represents_behavior_of(object)) => foo.is_method()</blockquote>
- * <br>
- * <p>Todo método de <strong>um</strong> objeto possui embutido um
- * ponteiro <strong>this</strong> exatamente por essa justificativa: o
- *  método DEPENDE DO ESTADO DO OBJETO PARA FUNCIONAR.</p>
- * <br><br>
- * <h2>O que são funções e procedimentos?</h2>
- * <p>Em contrapartida, as <strong>funções e procedimentos</strong>
- * existem para realizar algum trabalho independente do estado de um
- * objeto, dependendo apenas de seus parâmetros de entrada (que podem
- * conter um ou mais objetos).</p>
- * <br>
- * <p>Por serem um conjunto maior em relação aos métodos, elas não
- * possuem um ponteiro this. Um método é uma f/p, mas nem toda f/p é
- * um método.</p>
- * <br><br>
- * <h2>RESUMO "DA ÓPERA"</h2>
- * <p>Porque nenhuma das f/ps presentes nesta classe operariam sob um
- * atributo de instância da classe, não as defini como métodos.</p>
- * <br>
- * <p>As f/ps desta classe não dependem do estado de <strong>nenhum</strong>
- *  (<strong>0</strong>) objeto, ou sequer precisam de um objeto
- *  diretamente (exemplo: static Numero soma(Numero numero1, Numero
- *  numero2) é uma função de classe que depende de <strong>DOIS</strong>
- *   (<strong>2</strong>) objetos do tipo Numero, logo não é método)</p>
- * <br><br>
- * <h2><em>Entre para o movimento #DeixeOsObjetosBrincar(), em prol
- * do respeito ao objeto enquanto Ser Objeto!</em></h2>
  * 
  * @author Cledson Cavalcanti
  *
@@ -279,7 +233,9 @@ public class ClienteDAC {
 		return row_count > 0;
 	}
 
-	/** Verifica se um cliente com mesmo nome e data de nascimento já existe no banco de dados.
+	/** Verifica pela existência de um cliente
+	 * 
+	 * NOTA: os dados verificados são o nome completo e a data de nascimento em conjunto, e o CPF.
 	 * 
 	 * @param cliente					- objeto com os dados do cliente.
 	 * @throws PessoaJaExisteException	- caso um cliente com os mesmos dados já exista.
@@ -301,6 +257,11 @@ public class ClienteDAC {
 					"Outro cliente com o mesmo CPF já existe.");
 	}
 
+	/** Transforma dados de um ResultSet em um Cliente.
+	 * 
+	 *  @param rs - ResultSet
+	 *  @return Cliente
+	 */
 	private static Cliente resultSetParaCliente(ResultSet rs)
 			throws SQLException {
 		Cliente cliente;
