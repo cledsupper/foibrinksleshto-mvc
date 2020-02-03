@@ -157,21 +157,21 @@
 
     <h4>Dimensões</h4>
     <div class="input-group">
-    	<span class="input-group-addon" id="addon-altura">Altura</span>
+    	<span class="input-group-addon" id="addon-altura">Altura em centímetros (cm)</span>
     	<input type="number" class="form-control" name="altura" placeholder="1.23" step="0.01" aria-describedby="addon-altura" value="<%= altura %>">
     </div>
     <div class="input-group">
-    	<span class="input-group-addon" id="addon-largura">Largura</span>
+    	<span class="input-group-addon" id="addon-largura">Largura em centímetros (cm)</span>
     	<input type="number" class="form-control" name="largura" placeholder="1.23" step="0.01" aria-describedby="addon-largura" value="<%= largura %>">
     </div>
     <div class="input-group">
-    	<span class="input-group-addon" id="addon-profundidade">Profundidade</span>
+    	<span class="input-group-addon" id="addon-profundidade">Profundidade em centímetros (cm)</span>
     	<input type="number" class="form-control" name="profundidade" placeholder="1.23" step="0.01" aria-describedby="addon-profundidade" value="<%= profundidade %>">
     </div>
     <br>
     <p>Peso</p>
     <div class="input-group">
-    	<span class="input-group-addon" id="addon-peso">Peso (g)</span>
+    	<span class="input-group-addon" id="addon-peso">Peso em gramas (g)</span>
     	<input type="number" class="form-control" name="peso" placeholder="1.23" step="0.01" aria-describedby="addon-peso" value="<%= peso %>">
     </div>
     <br><br>

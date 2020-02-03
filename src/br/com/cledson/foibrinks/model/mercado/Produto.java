@@ -104,10 +104,10 @@ public class Produto extends ORI {
 		return dimensoes;
 	}
 
-	/** Retorna um tamanho de acordo com a dimensÃ£o.
+	/** Retorna um tamanho de acordo com a dimensão.
 	 * 
 	 * @param dimensao
-	 * @return tamanho
+	 * @return tamanho - tamanho em centímetros (cm).
 	 * @throws IndexOutOfBoundsException se dimensao = Dimensao.Enum.Tamanho
 	 */
 	public double getDimensao(Dimensao.Enum dimensao) {
@@ -125,9 +125,13 @@ public class Produto extends ORI {
 		return Double.NaN;
 	}
 	
+	/** Retorna o volume do produto em metros cúbicos (m³).
+	 * 
+	 * @return volume.
+	 */
 	public double getVolume() {
 		double volume = dimensoes[Dimensao.ALTURA] * dimensoes[Dimensao.LARGURA] * dimensoes[Dimensao.PROFUNDIDADE];
-		return volume;
+		return volume/Math.pow(1000, 3);
 	}
 	
 	public double getFreteParaLua() {
@@ -155,10 +159,10 @@ public class Produto extends ORI {
 		this.faixaEtaria = faixaEtaria;
 	}
 
-	/** Altera um tamanho de acordo com a dimensÃ£o para 'valor'.
+	/** Altera um tamanho de acordo com a dimensão para 'valor'.
 	 * Altera todos os tamanhos para 'valor' se dimensao = Dimensao.Enum.Tamanho.
 	 * 
-	 * @param valor
+	 * @param valor - tamanho em centímetros (cm)
 	 * @param dimensao
 	 * @throws ORIValorInvalidoException 
 	 */

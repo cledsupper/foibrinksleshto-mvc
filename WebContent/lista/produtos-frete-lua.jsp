@@ -25,7 +25,7 @@
 	if (produtos != null) {
 		if (produtos.size() == 0) {
 %>
-		<h1>Vai mandar para a lua?</h1>
+		<h1><button type="button" onclick="voltar();" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-left"></span>Voltar</button> Vai mandar para a lua?</h1>
 		<h3>Mas como se não há nenhum produto cadastrado???</h3>
 		<br>
 		<p class="linha-centro"><a href="../cadastra/produto.html"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Adicionar produto</button></a></p>
@@ -33,7 +33,7 @@
 		} else {
 %>
 		<form action="clientes.jsp" method="POST">
-			<h1>Vai mandar para a lua?</h1>
+			<h1><button type="button" onclick="voltar();" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-left"></span>Voltar</button> Vai mandar para a lua?</h1>
 			<h3>Selecione os produtos</h3>
 			<br>
 			<table class="table">
@@ -44,7 +44,7 @@
 						<th scope="col">Nome do produto</th>
 						<th scope="col">Preço (R$)</th>
 						<th scope="col">Peso (g)</th>
-						<th scope="col">Volume (cm³)</th>
+						<th scope="col">Volume (m³)</th>
 						<th scope="col">Frete estimado de Angicos para a Lua (R$)</th>
 						<th scope="col">Quantidade</th>
 					</tr>
@@ -58,7 +58,7 @@
 				String nome = produto.getNome();
 				String preco = String.format("%.2f", produto.getPreco());
 				String peso = String.format("%.1f", produto.getPeso());
-				String volume = String.format("%.2f", produto.getVolume());
+				String volume = String.format("%.3f", produto.getVolume());
 				String freteParaLua = String.format("%.2f", produto.getFreteParaLua());
 %>
 					<tr>
@@ -68,7 +68,7 @@
 						<td class="linha-direito"><%= preco %></td>
 						<td class="linha-direito"><%= peso %></td>
 						<td class="linha-direito"><%= volume %></td>
-						<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-preco-diferenca" value="<%= freteParaLua %>" readonly></td>
+						<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-frete" value="<%= freteParaLua %>" readonly></td>
 						<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 					</tr>
 <%
