@@ -15,7 +15,7 @@
 <%
 	ArrayList<Produto> produtos = null;
 	try {
-		produtos = ProdutoDAO.listaProdutos(false);
+		produtos = ProdutoDAO.listaProdutos(true);
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao ler dados:</h1>"
