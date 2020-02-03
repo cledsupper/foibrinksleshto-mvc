@@ -171,7 +171,7 @@
     <br>
     <p>Peso</p>
     <div class="input-group">
-    	<span class="input-group-addon" id="addon-peso">Peso</span>
+    	<span class="input-group-addon" id="addon-peso">Peso (g)</span>
     	<input type="number" class="form-control" name="peso" placeholder="1.23" step="0.01" aria-describedby="addon-peso" value="<%= peso %>">
     </div>
     <br><br>

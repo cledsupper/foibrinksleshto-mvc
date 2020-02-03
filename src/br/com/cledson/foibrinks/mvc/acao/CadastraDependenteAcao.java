@@ -36,7 +36,7 @@ public class CadastraDependenteAcao implements Acao {
 		Long codigo_cliente = Long.parseLong(codigo_cliente_string);
 		Cliente cliente = null;
 		try {
-			cliente = ClienteDAO.getCliente(codigo_cliente);
+			cliente = ClienteDAO.le(codigo_cliente);
 			cliente.adicionaDependente(dependente);
 		} catch (Exception e) {
 			e.printStackTrace();

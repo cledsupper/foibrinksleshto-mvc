@@ -124,6 +124,15 @@ public class Produto extends ORI {
 		}
 		return Double.NaN;
 	}
+	
+	public double getVolume() {
+		double volume = dimensoes[Dimensao.ALTURA] * dimensoes[Dimensao.LARGURA] * dimensoes[Dimensao.PROFUNDIDADE];
+		return volume;
+	}
+	
+	public double getFreteParaLua() {
+		return getPeso()*ProdutoConstantes.DOUBLE_FRETE_PARA_LUA;
+	}
 
 	public double getPeso() {
 		return peso;

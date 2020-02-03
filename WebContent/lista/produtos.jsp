@@ -20,7 +20,7 @@
 
 	ArrayList<Produto> produtos = null;
 	try {
-		produtos = ProdutoDAO.listaProdutos(true, null, null, null);
+		produtos = ProdutoDAO.listaProdutos(true);
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("<h1 class=\"erro\">Erro ao ler dados:</h1>"
@@ -40,6 +40,9 @@
 		<form action="clientes.jsp" method="POST">
 		<h1>Cadastro de venda</h1>
 		<h3>Selecione os produtos</h3>
+		<br>
+		<p>Hey! talvez você queira <a href="produtos-frete-lua.jsp">mandar para a lua</a>.</p>
+		<br><br>
 		<table class="table">
 			<thead>
 				<tr>
@@ -51,7 +54,7 @@
 					<th scope="col">Nome do produto</th>
 					<th scope="col">Marca</th>
 					<th scope="col">Faixa etária</th>
-					<th scope="col">Preço</th>
+					<th scope="col">Preço (R$)</th>
 					<th class="linha-centro" scope="col">Quantidade para adicionar</th>
 				</tr>
 			</thead>
@@ -64,7 +67,7 @@
 				String marca = produto.getMarca();
 				String faixaEtaria = "" + produto.getFaixaEtaria();
 				faixaEtaria = faixaEtaria.equals("0") ? "LIVRE" : faixaEtaria + " anos"; 
-				String preco = String.format("R$ %.2f", produto.getPreco());
+				String preco = String.format("%.2f", produto.getPreco());
 %>
 				<tr>
 					<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
@@ -83,12 +86,12 @@
 		<br><br>
 		<p style="text-align: center;">
 			<button id="btn-adicionar" class="btn btn-success" disabled=""><span class="glyphicon glyphicon-shopping-cart"></span>	Vender para</button></p>
+		</form>
 <%
 		}
 	}
 %>
 		<br><br>
-  </form>
 </div>
 
 <script src="../scripts/produto-formulario.js"></script>

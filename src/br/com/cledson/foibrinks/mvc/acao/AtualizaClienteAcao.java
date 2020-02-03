@@ -28,7 +28,7 @@ public class AtualizaClienteAcao implements Acao {
 		String estado = req.getParameter("estado");
 
 		try {
-			Cliente cliente = ClienteDAO.getCliente(codigo);
+			Cliente cliente = ClienteDAO.le(codigo);
 
 			cliente.setNomeCompleto(nome);
 			cliente.setDataNascimentoHTML(data_nascimento);

@@ -52,7 +52,30 @@ public class ProdutoDAO {
 		return produto;
 	}
 
-	/** Retorna de uma lista 
+	/** Retorna uma lista de produtos. 
+	 * 
+	 * @param por_volume - caso true, ordena a lista a partir do produto mais volumoso.
+	 * @return ArrayList<Produto>
+	 * @throws SQLException
+	 */
+	public static ArrayList<Produto> listaProdutos(boolean por_volume) throws SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+
+		String sql = "SELECT * FROM produtos" + (!por_volume ? " ORDER BY data_cadastro " :
+			" ORDER BY (altura*largura*profundidade) ") + "DESC";
+
+		PreparedStatement stmt = conn
+				.prepareStatement(sql);
+
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next())
+			produtos.add(resultSetParaProduto(rs));
+		return produtos;
+	}
+
+	/** Retorna uma lista de produtos, versão com filtros. 
+	 * @deprecated Desde 3 de fev. 2020. Justificativa: sem uso prático.
 	 * 
 	 * @param recentes - caso true, ordena a lista a partir do último produto cadastrado.
 	 * @param faixaEtaria - caso não nulo, filtra os produtos pela faixa etária indicada

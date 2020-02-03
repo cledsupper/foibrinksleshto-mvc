@@ -11,4 +11,6 @@ public class ProdutoConstantes {
 	public static short SHORT_FAIXA_ETARIA_5_ANOS = 5;
 	public static short SHORT_FAIXA_ETARIA_10_ANOS = 10;
 	public static short SHORT_FAIXA_ETARIA_14_ANOS = 14;
+	
+	public static double DOUBLE_FRETE_PARA_LUA = 123456;
 }

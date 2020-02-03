@@ -18,7 +18,7 @@
 		out.write("<h2 class=\"aviso sucesso linha-centro\">Cliente removido!</h2>");
 	ArrayList<Cliente> clientes = null;
 	try {
-		clientes = ClienteDAO.getLista(true);
+		clientes = ClienteDAO.lista(true);
 	} catch (Exception e) {
 		out.println("<h1 class=\"erro\">Erro ao listar clientes</h1>\n"
 		+ "<h3>O banco de dados está conectado?</h3>");
@@ -95,7 +95,7 @@
 				</form>
 
 				<script src="../scripts/venda-formulario.js"></script>
-<%			} /* } BLOCO-VENDA */
+<%			} /* BLOCO-VENDA */
 
 			else { /* BLOCO-CLIENTES */
 %>

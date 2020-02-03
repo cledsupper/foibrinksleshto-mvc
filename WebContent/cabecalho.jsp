@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +7,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- ARQUIVOS NECESSÃRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
+  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  <!-- Script que conserta a pÃ¡gina como eu quero -->
+  <!-- Script que conserta a página como eu quero -->
   <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
  
   <style>
@@ -34,7 +34,7 @@
     }
   </style>
 
-  <!-- Para estilizar os formulÃ¡rios do jeito que eu quero. -->
+  <!-- Para estilizar os formulários do jeito que eu quero. -->
   <link rel="stylesheet" href="../css/formularios.css">
 </head>
 <body>

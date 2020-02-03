@@ -33,23 +33,23 @@ public class Cliente extends Pessoa {
 	}
 
 	public static Cliente procura(long codigo) throws SQLException {
-		return ClienteDAO.getCliente(codigo);
+		return ClienteDAO.le(codigo);
 	}
 
 	public static Cliente procuraPorCPF(String cpf) throws SQLException {
 		String cpfOk = ClienteValidador.paraCpfOk(cpf);
 		if (cpfOk != null)
-			return ClienteDAO.getClientePorCpf(cpfOk);
+			return ClienteDAO.lePorCpf(cpfOk);
 
 		return null;
 	}
 
 	public static Cliente[] procuraPorNome(String nome) throws SQLException {
-		return (Cliente[]) ClienteDAO.getListaPorNome(nome).toArray();
+		return (Cliente[]) ClienteDAO.listaPorNome(nome).toArray();
 	}
 
 	public static Cliente procuraPorNomeData(String nome, Calendar data) throws SQLException {
-		return ClienteDAO.getClientePorNomeData(nome, data);
+		return ClienteDAO.lePorNomeData(nome, data);
 	}
 
 	public void adicionaDependente(Dependente dep)

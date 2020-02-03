@@ -173,7 +173,7 @@ public class VendaDAO {
 	private static Venda resultSetParaVenda(ResultSet rs) throws SQLException {
 		long codigo_cliente = rs.getLong("codigo_cliente");
 		long codigo = rs.getLong("codigo");
-		Cliente cliente = ClienteDAO.getCliente(codigo_cliente);
+		Cliente cliente = ClienteDAO.le(codigo_cliente);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(rs.getDate("data_venda"));
 

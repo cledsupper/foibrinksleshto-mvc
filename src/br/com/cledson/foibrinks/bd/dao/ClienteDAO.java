@@ -15,9 +15,6 @@ import br.com.cledson.foibrinks.model.pessoal.PessoaJaExisteException;
 /** ClienteDAO - Uma classe que oferece métodos para manipulação de dados dos
  * clientes no banco de dados.
  * 
- * OBS.: por DAO ser um padrão de projeto, e ter a necessidade de uso com as páginas JSP deste projeto,
- * decidi retornar a ele.
- * 
  * @author Cledson Cavalcanti
  *
  */
@@ -28,7 +25,7 @@ public class ClienteDAO {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente getCliente(long codigo) throws SQLException {
+	public static Cliente le(long codigo) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
 		PreparedStatement stmt = conn
@@ -49,7 +46,7 @@ public class ClienteDAO {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente getClientePorNomeData(String nomeCompleto,
+	public static Cliente lePorNomeData(String nomeCompleto,
 			Calendar dataNascimento) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
@@ -74,7 +71,7 @@ public class ClienteDAO {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static Cliente getClientePorCpf(String cpf) throws SQLException {
+	public static Cliente lePorCpf(String cpf) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		Cliente cliente = null;
 		PreparedStatement stmt = conn
@@ -95,7 +92,7 @@ public class ClienteDAO {
 	 * @return Cliente		- objeto com dados do cliente.
 	 * @throws SQLException - erro interno ou de engenharia.
 	 */
-	public static ArrayList<Cliente> getListaPorNome(String nome) throws SQLException {
+	public static ArrayList<Cliente> listaPorNome(String nome) throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 		PreparedStatement stmt = conn
@@ -118,7 +115,7 @@ public class ClienteDAO {
 	 * @return ArrayList<Cliente>	- uma lista de clientes.
 	 * @throws SQLException			- erro interno ou de engenharia.
 	 */
-	public static ArrayList<Cliente> getLista(boolean recentes)
+	public static ArrayList<Cliente> lista(boolean recentes)
 		throws SQLException {
 		Connection conn = ConnectionFactory.getConnection();
 		String sql = "SELECT * FROM clientes";
@@ -246,14 +243,14 @@ public class ClienteDAO {
 	 */
 	public static void verificaSeExiste(Cliente cliente)
 			throws PessoaJaExisteException, SQLException {
-		Cliente outro_cliente = getClientePorNomeData(cliente.getNomeCompleto(),
+		Cliente outro_cliente = lePorNomeData(cliente.getNomeCompleto(),
 				cliente.getDataNascimento());
 		if (outro_cliente != null)
 			if (outro_cliente.getCodigo() != cliente.getCodigo())
 				throw new PessoaJaExisteException(cliente,
 					"Outro cliente com mesmo nome e data de nascimentos já existe.");
 
-		outro_cliente = getClientePorCpf(cliente.getCpf());
+		outro_cliente = lePorCpf(cliente.getCpf());
 		if (outro_cliente != null)
 			if (outro_cliente.getCodigo() != cliente.getCodigo())
 				throw new PessoaJaExisteException(cliente,

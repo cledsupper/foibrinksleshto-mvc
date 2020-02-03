@@ -10,12 +10,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-Long codigo_cliente = Long.parseLong(request.getParameter("codigo-cliente"));
+	Long codigo_cliente = Long.parseLong(request.getParameter("codigo-cliente"));
 Long codigo = Long.parseLong(request.getParameter("codigo"));
 Cliente cliente = null;
 Dependente dep = null;
 try {
-	cliente = ClienteDAO.getCliente(codigo_cliente);
+	cliente = ClienteDAO.le(codigo_cliente);
 	dep = DependenteDAO.le(codigo);
 } catch (Exception e) {}
 %>

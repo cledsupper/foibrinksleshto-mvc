@@ -24,7 +24,7 @@ public class CadastraVendaAcao implements Acao {
 
 		Cliente cliente = null;
 		try {
-			cliente = ClienteDAO.getCliente(Long.parseLong(cliente_radio));
+			cliente = ClienteDAO.le(Long.parseLong(cliente_radio));
 			Venda venda = new Venda(cliente);
 
 			for (int i=0; i < produtos_codigos.length; i++) {

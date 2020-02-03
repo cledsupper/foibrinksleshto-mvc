@@ -17,7 +17,7 @@ public class RemoveClienteAcao implements Acao {
 		Long codigo = Long.parseLong(req.getParameter("codigo"));
 
 		try {
-			ClienteDAO.getCliente(codigo).remove();
+			ClienteDAO.le(codigo).remove();
 		} catch (PessoaNaoEncontradaException | SQLException e) {
 			e.printStackTrace();
 			res.getWriter().write("Erro ao remover cliente:\n"
