@@ -54,7 +54,7 @@ public class ProdutoDAO {
 
 	/** Retorna uma lista de produtos. 
 	 * 
-	 * @param por_volume - caso true, ordena a lista a partir do produto mais volumoso.
+	 * @param por_volume - ordena a lista a partir do produto mais volumoso, ou pelo mais recente caso contrário.
 	 * @return ArrayList<Produto>
 	 * @throws SQLException
 	 */

@@ -1,3 +1,4 @@
+<%@page import="br.com.cledson.foibrinks.model.mercado.ProdutoConstantes"%>
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="br.com.cledson.foibrinks.bd.dao.ProdutoDAO"%>
@@ -43,10 +44,58 @@
 		<br>
 		<p>Hey! talvez você queira <a href="produtos-frete-lua.jsp">mandar para a lua</a>.</p>
 		<br><br>
+
+		<%-- Tabela dos produtos mais recentes com descontos. --%>
 		<table class="table">
 			<thead>
 				<tr>
-					<th colspan="6" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
+					<th colspan="6" class="observe linha-centro" scope="row">Produtos mais novos com desconto</th>
+				</tr>
+				<tr>
+					<th colspan="6" class="observe linha-centro" scope="row">(*) valor demonstrativo.</th>
+				</tr>
+				<tr>
+					<th scope="col">Adicionar</th>
+					<th style="display: none;">Código</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Preço original (R$)</th>
+					<th scope="col">Oferta (R$)<strong class="observe">*</strong></th>
+					<th scope="col">Quantidade para adicionar</th>
+				</tr>
+			</thead>
+
+			<tbody>
+<%
+			int i;
+			for (i=0; i < ProdutoConstantes.INT_LIMITE_DESCONTO_PARA_RECENTES; i++) {
+				if (i == produtos.size()) break;
+				Produto produto = produtos.get(i);
+				String codigo = "" + produto.getCodigo();
+				String nome = produto.getNome();
+				String preco = String.format("%.2f", produto.getPreco());
+				String precoComDesconto = String.format("%.2f",
+						produto.getPrecoComDescontoParaRecentes());
+%>
+				<tr>
+					<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
+					<td style="display: none;"><input type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
+					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
+					<td class="linha-direito"><%= preco %></td>
+					<td class="linha-direito"><%= precoComDesconto %></td>
+					<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
+				</tr>
+<%			
+			}
+%>
+			</tbody>
+		</table>
+		<br><br>
+
+		<%-- Tabela de produtos geral. --%>
+		<table class="table">
+			<thead>
+				<tr>
+					<th colspan="7" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
 				</tr>
 				<tr>
 					<th scope="col">Adicionar</th>
@@ -60,7 +109,7 @@
 			</thead>
 			<tbody>
 <%
-			for (int i=0; i < produtos.size(); i++) {
+			for (i=0; i < produtos.size(); i++) {
 				Produto produto = produtos.get(i);
 				String codigo = "" + produto.getCodigo();
 				String nome = produto.getNome();

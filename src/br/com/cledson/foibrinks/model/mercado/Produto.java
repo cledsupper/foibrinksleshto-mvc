@@ -7,7 +7,6 @@ import br.com.cledson.foibrinks.bd.dao.ProdutoDAO;
 import br.com.cledson.foibrinks.model.ORI;
 import br.com.cledson.foibrinks.model.ORIException;
 import br.com.cledson.foibrinks.model.ORIIncadastravelException;
-import br.com.cledson.foibrinks.model.ORINaoEncontradoException;
 import br.com.cledson.foibrinks.model.ORIUtilitarios;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 
@@ -144,6 +143,12 @@ public class Produto extends ORI {
 
 	public double getPreco() {
 		return preco;
+	}
+	
+	public double getPrecoComDescontoParaRecentes() {
+		double desconto = ProdutoConstantes.DOUBLE_PRECO_DESCONTO_PARA_RECENTES_PERC/100;
+		desconto = preco*desconto;
+		return preco - desconto;
 	}
 
 	public void setNome(String nome) {
