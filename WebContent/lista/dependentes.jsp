@@ -16,7 +16,7 @@
 <div class="container">
 <%
 Long codigo_cliente = Long.parseLong(request.getParameter("codigo-cliente"));
-Cliente cliente = ClienteDAO.getCliente(codigo_cliente);
+Cliente cliente = ClienteDAO.le(codigo_cliente);
 
 String notifica_remocao = request.getParameter("notifica-remocao");
 if (notifica_remocao != null)

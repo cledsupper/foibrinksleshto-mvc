@@ -74,7 +74,7 @@
 						<td class="linha-direito"><%= preco %></td>
 						<td class="linha-direito"><%= peso %></td>
 						<td class="linha-direito"><%= volume %></td>
-						<td class="linha-direito"><%= freteParaLua %>"</td>
+						<td class="linha-direito"><%= freteParaLua %></td>
 						<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 					</tr>
 <%

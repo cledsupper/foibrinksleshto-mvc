@@ -86,6 +86,8 @@
 				</tr>
 <%			
 			}
+			
+			if (i < produtos.size()) {
 %>
 			</tbody>
 		</table>
@@ -109,7 +111,7 @@
 			</thead>
 			<tbody>
 <%
-			for (i=0; i < produtos.size(); i++) {
+			for (; i < produtos.size(); i++) {
 				Produto produto = produtos.get(i);
 				String codigo = "" + produto.getCodigo();
 				String nome = produto.getNome();
@@ -137,6 +139,7 @@
 			<button id="btn-adicionar" class="btn btn-success" disabled=""><span class="glyphicon glyphicon-shopping-cart"></span>	Vender para</button></p>
 		</form>
 <%
+			}
 		}
 	}
 %>

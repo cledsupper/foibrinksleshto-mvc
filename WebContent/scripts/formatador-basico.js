@@ -1,4 +1,4 @@
-const VERSAO = "1.2.191224 beta";
+const VERSAO = "1.5.200204 beta";
 
 function fechaAvisos() {
 	var aviso = $(".aviso");
