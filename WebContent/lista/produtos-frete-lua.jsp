@@ -39,13 +39,19 @@
 			<table class="table">
 				<thead>
 					<tr>
+						<th colspan="8" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
+					</tr>
+					<tr>
+						<th colspan="8" class="observe linha-centro" scope="row">(*) valor demonstrativo.</th>
+					</tr>
+					<tr>
 						<th scope="col">Adicionar</th>
-						<th style="display: none">Código</th>
+						<th style="display: none;">Código</th>
 						<th scope="col">Nome do produto</th>
 						<th scope="col">Preço (R$)</th>
 						<th scope="col">Peso (g)</th>
 						<th scope="col">Volume (m³)</th>
-						<th scope="col">Frete estimado de Angicos para a Lua (R$)</th>
+						<th scope="col">Frete estimado de Angicos para a Lua (R$)<strong class="observe">*</strong></th>
 						<th scope="col">Quantidade</th>
 					</tr>
 				</thead>
@@ -63,12 +69,12 @@
 %>
 					<tr>
 						<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
-						<td style="display: none"><input class="linha-direito form-control" type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
+						<td style="display: none;"><input class="linha-direito form-control" type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
 						<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
 						<td class="linha-direito"><%= preco %></td>
 						<td class="linha-direito"><%= peso %></td>
 						<td class="linha-direito"><%= volume %></td>
-						<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-frete" value="<%= freteParaLua %>" readonly></td>
+						<td class="linha-direito"><%= freteParaLua %>"</td>
 						<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 					</tr>
 <%
