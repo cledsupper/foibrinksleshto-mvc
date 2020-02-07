@@ -24,7 +24,7 @@ $(document).ready(function() {
 			+ (bakHtml === 'P-LISTA-CLIENTES' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/lista/clientes.jsp">Clientes</a></li>'
 			+ (bakHtml === 'P-LISTA-VENDAS' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/lista/vendas.jsp">Vendas</a></li>'
 
-			+ (bakHtml === 'P-FATURAMENTO' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/gera-mentos/faturamento.jsp">Faturamento</a></li>'
+			//+ (bakHtml === 'P-FATURAMENTO' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/gera-mentos/faturamento.jsp">Faturamento</a></li>'
 			+ (bakHtml === 'P-SOBRE' ? '<li class="active"><a href="#">' : '<li><a href="/foiBrinksLeshtoMVC/sobre.html">')
 				+ 'Sobre o TAV</a></li>'
 			+ (bakHtml === 'P-MODELO' ? '<li class="active"><a href="#">UAU, VOCÊ ME ACHOU :0</a></li>' : '')
