@@ -1,8 +1,22 @@
 package br.com.cledson.foibrinks.model.mercado;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import br.com.cledson.foibrinks.bd.dao.ProdutoDAO;
 import br.com.cledson.foibrinks.model.ORIValorInvalidoException;
 
 public class ProdutoValidador {
+	public static boolean produtoNovo(Produto produto)
+			throws SQLException {
+		ArrayList<Produto> produtosNovos = ProdutoDAO.listaProdutosNovos(ProdutoConstantes.INT_LIMITE_DESCONTO_PARA_RECENTES);
+		for (Produto novo : produtosNovos) {
+			if (produto.getCodigo() == novo.getCodigo())
+				return true;
+		}
+		return false;
+	}
+	
 	public static void validaDimensao(Produto produto, double valor, Dimensao.Enum dim)
 		throws ORIValorInvalidoException {
 		final String dimName = dim.name();

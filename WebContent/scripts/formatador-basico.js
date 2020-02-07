@@ -24,9 +24,10 @@ $(document).ready(function() {
 			+ (bakHtml === 'P-LISTA-CLIENTES' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/lista/clientes.jsp">Clientes</a></li>'
 			+ (bakHtml === 'P-LISTA-VENDAS' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/lista/vendas.jsp">Vendas</a></li>'
 
+			+ (bakHtml === 'P-FATURAMENTO' ? '<li class="active">' : '<li>') + '<a href="/foiBrinksLeshtoMVC/gera-mentos/faturamento.jsp">Faturamento</a></li>'
 			+ (bakHtml === 'P-SOBRE' ? '<li class="active"><a href="#">' : '<li><a href="/foiBrinksLeshtoMVC/sobre.html">')
 				+ 'Sobre o TAV</a></li>'
-			+ (bakHtml === 'P-MODELO' ? '<li class="active"><a href="#">UAU, VOÇÊ ME ACHOU :0</a></li>' : '')
+			+ (bakHtml === 'P-MODELO' ? '<li class="active"><a href="#">UAU, VOCÊ ME ACHOU :0</a></li>' : '')
 		+ '</ul>\
 		<ul class="nav navbar-nav navbar-right">'
 		+ (bakHtml === 'P-CADASTRA-CLIENTE' ? '<li class="active"><a href="#">'
@@ -49,7 +50,7 @@ $(document).ready(function() {
 		var h1 = $('h1');
 		h1[1].innerHTML = '<button type="button" onclick="voltar();" class="btn btn-secondary">'
 			+ '<span class="glyphicon glyphicon-arrow-left"></span>'
-			+ ' Voltar</button>	' + h1[1].innerHTML;
+			+ '\tVoltar</button>	' + h1[1].innerHTML;
 	}
 	
 	/* Alinhar colunas verticalmente no centro */
@@ -62,7 +63,7 @@ $(document).ready(function() {
 	/* Colocar nota de copyright no rodapé. */
 	var yearNow = new Date().getYear() + 1900;
 	$("#leshto-copyright-footer-note").text(
-			"FoiBrinks by Leshto © " + yearNow + " Todos os direitos reservados.");
+			"FoiBrinks by Leshto (c) " + yearNow + " Todos os direitos reservados.");
 });
 
 function irPara(endereco) {

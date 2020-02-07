@@ -43,7 +43,7 @@
 						<th colspan="8" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
 					</tr>
 					<tr>
-						<th colspan="8" class="observe linha-centro" scope="row">(*) valor demonstrativo.</th>
+						<th colspan="8" class="observe linha-centro" scope="row">(*) valor demonstrativo. [FUNÇÃO DE FRETE DESABILITADA]</th>
 					</tr>
 					<tr>
 						<th scope="col">Adicionar</th>

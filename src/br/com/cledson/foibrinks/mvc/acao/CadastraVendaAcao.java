@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.cledson.foibrinks.bd.dao.ClienteDAO;
 import br.com.cledson.foibrinks.model.mercado.Produto;
+import br.com.cledson.foibrinks.model.mercado.ProdutoValidador;
 import br.com.cledson.foibrinks.model.mercado.Venda;
 import br.com.cledson.foibrinks.model.pagamento.Cartao;
 import br.com.cledson.foibrinks.model.pagamento.Dinheiro;
@@ -18,6 +19,8 @@ public class CadastraVendaAcao implements Acao {
 			throws Exception {
 		String[] produtos_codigos = req.getParameterValues("produto-codigo");
 		String[] produtos_qtds = req.getParameterValues("produto-qtd");
+		boolean incluiFreteParaLua =
+				req.getParameter("inclui-frete-para-lua") != null;
 		String cliente_radio = req.getParameter("cliente-radio");
 		String forma_radio = req.getParameter("forma-radio");
 		String numero_cartao = req.getParameter("numero-cartao");
@@ -29,10 +32,24 @@ public class CadastraVendaAcao implements Acao {
 
 			for (int i=0; i < produtos_codigos.length; i++) {
 				Produto produto = Produto.procura(Long.parseLong(produtos_codigos[i]));
-				venda.adicionaProduto(
-						produto,
-						Integer.parseInt(produtos_qtds[i]),
-						produto.getPreco());
+				int qtd = Integer.parseInt(produtos_qtds[i]);
+				/* TODO: habilitar o frete para a lua se necessário. */
+				if (incluiFreteParaLua) {
+					venda.adicionaProduto(
+							produto,
+							qtd,
+							produto.getPreco() /* + produto.getFreteParaLua() */);
+				}
+				else {
+					if (ProdutoValidador.produtoNovo(produto))
+						venda.adicionaProduto(produto,
+								qtd,
+								produto.getPrecoComDescontoParaRecentes());
+					else
+						venda.adicionaProduto(produto,
+								qtd,
+								produto.getPreco());
+				}
 			}
 			if (forma_radio.charAt(0) == Dinheiro.FORMA) {
 				Dinheiro din = new Dinheiro(venda);

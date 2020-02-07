@@ -53,14 +53,11 @@
 					<th colspan="6" class="observe linha-centro" scope="row">Produtos mais novos com desconto</th>
 				</tr>
 				<tr>
-					<th colspan="6" class="observe linha-centro" scope="row">(*) valor demonstrativo.</th>
-				</tr>
-				<tr>
 					<th scope="col">Adicionar</th>
 					<th style="display: none;">Código</th>
 					<th scope="col">Nome</th>
 					<th scope="col">Preço original (R$)</th>
-					<th scope="col">Oferta (R$)<strong class="observe">*</strong></th>
+					<th scope="col">Oferta (R$)</th>
 					<th scope="col">Quantidade para adicionar</th>
 				</tr>
 			</thead>

@@ -74,6 +74,23 @@ public class ProdutoDAO {
 		return produtos;
 	}
 
+	public static ArrayList<Produto> listaProdutosNovos(int limite) throws SQLException {
+		Connection conn = ConnectionFactory.getConnection();
+
+		String sql = "SELECT * FROM produtos ORDER BY data_cadastro DESC LIMIT ?";
+
+		PreparedStatement stmt = conn
+				.prepareStatement(sql);
+		stmt.setInt(1, limite);
+
+		ArrayList<Produto> produtos = new ArrayList<Produto>();
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next())
+			produtos.add(resultSetParaProduto(rs));
+
+		return produtos;
+	}
+
 	/** Retorna uma lista de produtos, versão com filtros. 
 	 * @deprecated Desde 3 de fev. 2020. Justificativa: sem uso prático.
 	 * 

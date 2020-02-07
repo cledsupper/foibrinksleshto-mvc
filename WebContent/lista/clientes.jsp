@@ -40,11 +40,6 @@
 			/* BLOCO-VENDA */
 			if (produtos_codigos != null) {
 				String incluiFreteParaLua = request.getParameter("inclui-frete-para-lua");
-				if (incluiFreteParaLua != null) {
-%>
-					<input type="hidden" name="inclui-frete-para-lua">
-<%
-				}
 				String[] produtos_qtds = request.getParameterValues("produto-qtd");
 				String[] produtos_precos = request.getParameterValues("produto-preco");
 				String[] produtos_fretes = request.getParameterValues("produto-frete-lua");
@@ -64,6 +59,11 @@
 					custoTotal += (custo * quantidade);
 					if (incluiFreteParaLua != null)
 						freteTotal += (Double.parseDouble(produtos_fretes[i].replace(',', '.')) * quantidade);
+				}
+				if (incluiFreteParaLua != null) {
+%>
+					<input type="hidden" name="inclui-frete-para-lua">
+<%
 				}
 %>
 					<h1>Cadastro de venda</h1>
