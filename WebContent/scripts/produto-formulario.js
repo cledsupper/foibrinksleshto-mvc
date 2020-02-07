@@ -17,15 +17,23 @@ function tornaProduto(i) {
 	var produto_check = $('input[name="produto-check"]');
 	var produto_qtd = $('input[name="produto-qtd"]');
 	var produto_codigo = $('input[name="produto-codigo"]');
+	var produto_preco = $('input[name="produto-preco"]');
+	var produto_frete_lua = $('input[name="produto-frete-lua"]');
 
 	if (produto_check[i].checked) {
+		contaSelecoes++;
 		produto_codigo[i].outerHTML = produto_codigo[i].outerHTML.replace('disabled', 'readonly');
 		produto_qtd[i].outerHTML = CAMPO_PRODUTO_QTD_ATIVADO.replace('INDEX', i);
-		contaSelecoes++;
+		produto_preco[i].outerHTML = produto_preco[i].outerHTML.replace('disabled', 'readonly');
+		if (produto_frete_lua.length > i)
+			produto_frete_lua[i].outerHTML = produto_frete_lua[i].outerHTML.replace('disabled', 'readonly');
 	} else {
+		contaSelecoes = contaSelecoes == 0 ? 0 : contaSelecoes-1;
 		produto_codigo[i].outerHTML = produto_codigo[i].outerHTML.replace('readonly', 'disabled');
 		produto_qtd[i].outerHTML = CAMPO_PRODUTO_QTD_PADRAO;
-		contaSelecoes = contaSelecoes == 0 ? 0 : contaSelecoes-1;
+		produto_preco[i].outerHTML = produto_preco[i].outerHTML.replace('readonly', 'disabled');
+		if (produto_frete_lua.length > i)
+			produto_frete_lua[i].outerHTML = produto_frete_lua[i].outerHTML.replace('readonly', 'disabled');
 	}
 	tornaBotao();
 };

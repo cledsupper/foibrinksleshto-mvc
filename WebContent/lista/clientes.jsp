@@ -26,7 +26,7 @@
 
 	/* BLOCO-CLIENTES-NAO-NULL */
 	if (clientes != null) {
-		if (clientes.size() == 0) {
+		if (clientes.isEmpty()) {
 %>
 			<h1>Nenhum cliente cadastrado :(</h1>
 			<br>
@@ -39,15 +39,32 @@
 
 			/* BLOCO-VENDA */
 			if (produtos_codigos != null) {
+				String incluiFreteParaLua = request.getParameter("inclui-frete-para-lua");
+				if (incluiFreteParaLua != null) {
+%>
+					<input type="hidden" name="inclui-frete-para-lua">
+<%
+				}
 				String[] produtos_qtds = request.getParameterValues("produto-qtd");
+				String[] produtos_precos = request.getParameterValues("produto-preco");
+				String[] produtos_fretes = request.getParameterValues("produto-frete-lua");
+				double custoTotal = 0;
+				double freteTotal = 0;
 %>
 				<script>document.title = "FoiBrinks: Venda";</script>
 				<form action="../control" method="POST">
 			    	<input type="hidden" name="acao" value="CadastraVendaAcao">
-<%				for (int i=0; i < produtos_codigos.length; i++) { %>
+<%				for (int i=0; i < produtos_codigos.length; i++) {
+					double custo = Double.parseDouble(produtos_precos[i].replace(',', '.'));
+					double quantidade = Integer.parseInt(produtos_qtds[i]);
+%>
 					<input type="hidden" name="produto-codigo" value="<%= produtos_codigos[i] %>" >
 					<input type="hidden" name="produto-qtd" value="<%= produtos_qtds[i] %>" >
-<%				}
+<%
+					custoTotal += (custo * quantidade);
+					if (incluiFreteParaLua != null)
+						freteTotal += (Double.parseDouble(produtos_fretes[i].replace(',', '.')) * quantidade);
+				}
 %>
 					<h1>Cadastro de venda</h1>
 					<h3>Selecione um cliente</h3>
@@ -84,10 +101,28 @@
 					<br><br>
 
 					<h3>Dados de pagamento</h3>
-					<p>Forma de pagamento</p>
-					<p><input type="radio" name="forma-radio" value="D" onchange="tornaForma('D');" checked="true"> Dinheiro</p>
-					<p><input type="radio" name="forma-radio" value="C" onchange="tornaForma('C');"> Crédito</p>
-					<p>Número do cartão: <input id="campo-numero-cartao" class="linha-direito form-control" type="text" name="numero-cartao" maxlength="16" disabled></p>
+					<br>
+					<div style="width: 45%;">
+						<h4>Custos</h4>
+						<div class="input-group">
+							<span class="input-group-addon" id="addon-custo-total">Custo total</span>
+							<input class="linha-direito form-control" type="text" value="<%= String.format("%.2f", custoTotal) %>" aria-describedby="addon-custo-total" readonly>
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon" id="addon-frete">Frete de entrega</span>
+							<input class="linha-direito form-control" type="text" value="<%= String.format("%.2f", freteTotal) %>" aria-describedby="addon-frete" readonly>
+						</div>
+					</div>
+					<br><br>
+					<div style="width: 45%;">
+						<h4>Forma de pagamento</h4>
+						<p><input type="radio" name="forma-radio" value="D" onchange="tornaForma('D');" checked="true"> Dinheiro</p>
+						<p><input type="radio" name="forma-radio" value="C" onchange="tornaForma('C');"> Crédito</p>
+						<div class="input-group">
+							<span class="input-group-addon" id="addon-numero-cartao">Número do cartão</span>
+							<input id="campo-numero-cartao" class="linha-direito form-control" type="text" name="numero-cartao" value="0" aria-describedby="addon-numero-cartao" maxlength="16" disabled>
+						</div>
+					</div>
 					<br><br>
 					<p class="linha-centro">
 						<button id="btn-vender" class="btn btn-success" disabled=""><span class="glyphicon glyphicon-shopping-cart"></span>	Registrar venda</button>

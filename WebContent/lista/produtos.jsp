@@ -28,8 +28,9 @@
 		+ "<h3>O banco de dados está conectado?</h3>");
 	}
 
+	/* Somente se o banco de dados estiver conectado. */
 	if (produtos != null) {
-		if (produtos.size() == 0) {
+		if (produtos.isEmpty()) {
 %>
 			<h1>Bem vindo!</h1>
 			<h3>Nenhum produto registrado :(</h3>
@@ -81,7 +82,7 @@
 					<td style="display: none;"><input type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
 					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
 					<td class="linha-direito"><%= preco %></td>
-					<td class="linha-direito"><%= precoComDesconto %></td>
+					<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-preco" value="<%= precoComDesconto %>" disabled=""></td>
 					<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 				</tr>
 <%			
@@ -126,7 +127,7 @@
 					<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
 					<td class="linha-centro"><%= marca %></td>
 					<td class="linha-centro"><%= faixaEtaria %></td>
-					<td class="linha-direito"><%= preco %></td>
+					<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-preco" value="<%= preco %>" disabled=""></td>
 					<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 				</tr>
 <%
@@ -141,12 +142,13 @@
 <%
 			}
 		}
+%>
+		<script src="../scripts/produto-formulario.js"></script>
+		<script src="../scripts/produto-gerenciamento.js"></script>
+<%
 	}
 %>
 		<br><br>
 </div>
-
-<script src="../scripts/produto-formulario.js"></script>
-<script src="../scripts/produto-gerenciamento.js"></script>
 
 <c:import url="../rodape.jsp"/>

@@ -23,7 +23,7 @@
 	}
 
 	if (produtos != null) {
-		if (produtos.size() == 0) {
+		if (produtos.isEmpty()) {
 %>
 		<h1><button type="button" onclick="voltar();" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-left"></span>Voltar</button> Vai mandar para a lua?</h1>
 		<h3>Mas como se não há nenhum produto cadastrado???</h3>
@@ -33,6 +33,7 @@
 		} else {
 %>
 		<form action="clientes.jsp" method="POST">
+			<input type="hidden" name="inclui-frete-para-lua">
 			<h1><button type="button" onclick="voltar();" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-left"></span>Voltar</button> Vai mandar para a lua?</h1>
 			<h3>Selecione os produtos</h3>
 			<br>
@@ -71,10 +72,10 @@
 						<td class="linha-centro" scope="row"><input type="checkbox" name="produto-check" onchange="<%= "tornaProduto(" + i + ");" %>" ></td>
 						<td style="display: none;"><input class="linha-direito form-control" type="text" name="produto-codigo" value="<%= codigo %>" disabled=""></td>
 						<td class="linha-centro"><button type="button" class="btn btn-primary" onclick="detalhaProduto(<%= codigo %>);"><span class="glyphicon glyphicon-edit"></span>	<%= nome %></button></td>
-						<td class="linha-direito"><%= preco %></td>
+						<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-preco" value="<%= preco %>" disabled=""></td>
 						<td class="linha-direito"><%= peso %></td>
 						<td class="linha-direito"><%= volume %></td>
-						<td class="linha-direito"><%= freteParaLua %></td>
+						<td class="linha-direito"><input class="linha-direito form-control" type="text" name="produto-frete-lua" value="<%= freteParaLua %>" disabled=""></td>
 						<td class="linha-centro"><input class="linha-direito form-control" type="number" name="produto-qtd" value="0" disabled=""></td>
 					</tr>
 <%
@@ -88,13 +89,13 @@
 		</form>
 <%
 		}
+%>
+		<script src="../scripts/produto-formulario.js"></script>
+		<script src="../scripts/produto-gerenciamento.js"></script>
+<%
 	}
 %>
 	<br><br>
 </div>
-
-
-<script src="../scripts/produto-formulario.js"></script>
-<script src="../scripts/produto-gerenciamento.js"></script>
 
 <c:import url="../rodape.jsp"/>
