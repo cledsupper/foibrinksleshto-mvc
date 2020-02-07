@@ -5,6 +5,9 @@
 <%@page import="br.com.cledson.foibrinks.model.pessoal.Cliente"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="../cabecalho.jsp"/>
+
 <%
 	String string_codigo = request.getParameter("codigo");
 	Long codigo = Long.parseLong(string_codigo);
@@ -12,76 +15,20 @@
 	try {
 		cliente = Cliente.procura(codigo);
 	} catch (Exception e) {}
-%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>FoiBrinks: <%
-	String nome = "?";
+
+	String subtitulo;
+	String nome = "[?]";
 	if (cliente == null)
-		out.write("erro: cliente não existe");
+		subtitulo = "erro: cliente não existe";
 	else {
 		nome = cliente.getNomeCompleto();
-		out.write("editando " + nome);
+		subtitulo = "editando " + nome;
 	}
-  %></title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <!-- Script que conserta a página como eu quero. -->
-  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
-
-  <!-- Veja modelo.jsp para saber o que essas coisas significam -->
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-
-  <!-- Para estilizar os formulários do jeito que eu quero. -->
-  <link rel="stylesheet" href="../css/formularios.css">
-</head>
-<body>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>FoiBrinks</h1>      
-    <p>Terminal de Atendimento do Vendedor</p>
-  </div>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="..">TAV</a>
-    </div>
-    <!-- VEJA scripts/formatador-basico.js -->
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-CLIENTES</div>
-  </div>
-</nav>
+%>
+<script>
+	document.title = 'FoiBrinks: ' + '<%= subtitulo %>';
+	document.getElementById("myNavbar").innerHTML = 'P-LISTA-CLIENTES';
+</script>
 
 <div class="container">
 <%
@@ -241,9 +188,4 @@
   <br><br>
 </div>
 
-<footer class="container-fluid text-center">
-  <p id="leshto-copyright-footer-note"></p>
-</footer>
-
-</body>
-</html>
+<c:import url="../rodape.jsp"/>

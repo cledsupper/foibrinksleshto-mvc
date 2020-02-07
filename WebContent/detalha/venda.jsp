@@ -8,6 +8,8 @@
 <%@page import="br.com.cledson.foibrinks.mvc.Constantes"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="../cabecalho.jsp"/>
 <%
 	String string_codigo = request.getParameter("codigo");
 	Long codigo = Long.parseLong(string_codigo);
@@ -15,73 +17,18 @@
 	try {
 		venda = VendaDAO.le(codigo);
 	} catch (Exception e) {}
-%>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>FoiBrinks: <%
+	
+	String subtitulo;
 	if (venda == null)
-		out.write("erro: venda não existe");
+		subtitulo = "erro: venda não existe";
 	else
-		out.write("venda " + venda.getCodigo());
-  %></title>
+		subtitulo = "venda " + venda.getCodigo();
+%>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- ARQUIVOS NECESSÁRIOS DO BOOTSTRAP E DA BIBLIOTECA JQUERY -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  
-  <!-- Script que conserta a página como eu quero. -->
-  <script type="text/javascript" src="../scripts/formatador-basico.js"></script>
-
-  <!-- Veja modelo.jsp para saber o que essas coisas significam -->
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-    }
-   
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-
-  <!-- Para estilizar os formulários do jeito que eu quero. -->
-  <link rel="stylesheet" href="../css/formularios.css">
-</head>
-<body>
-
-<div class="jumbotron">
-  <div class="container text-center">
-    <h1>FoiBrinks</h1>      
-    <p>Terminal de Atendimento do Vendedor</p>
-  </div>
-</div>
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="..">TAV</a>
-    </div>
-    <!-- VEJA scripts/formatador-basico.js -->
-    <div class="collapse navbar-collapse" id="myNavbar">P-LISTA-VENDAS</div>
-  </div>
-</nav>
+<script>
+	document.title = 'FoiBrinks: ' + '<%= subtitulo %>';
+	document.getElementById("myNavbar").innerHTML = 'P-LISTA-VENDAS';
+</script>
 
 <div class="container">
 <%	if (venda != null) {
@@ -142,10 +89,10 @@
 		String numeroCartao = "" + ((Cartao)venda.getPagamento()).getNumeroCartao();
 		numeroCartao = "**** **** **** " + numeroCartao.substring(numeroCartao.length()-4, numeroCartao.length());
 %>
-  <div class="input-group">
-    <span class="input-group-addon" id="addon-numero-cartao">Cartão de crédito</span>
-    <input type="text" class="form-control" aria-describedby="addon-numero-cartao" value="<%= numeroCartao %>" readonly>
-  </div>
+		<div class="input-group">
+			<span class="input-group-addon" id="addon-numero-cartao">Cartão de crédito</span>
+			<input type="text" class="form-control" aria-describedby="addon-numero-cartao" value="<%= numeroCartao %>" readonly>
+		</div>
 <%
 	}
 %>
@@ -201,15 +148,11 @@
 %>
 		<h1>Venda não encontrada</h1>
 		<h3>Verifique se a venda não foi removida.</h3>
-<%	}
+<%
+	}
 %>
 
   <br><br>
 </div>
 
-<footer class="container-fluid text-center">
-  <p id="leshto-copyright-footer-note"></p>
-</footer>
-
-</body>
-</html>
+<c:import url="../rodape.jsp"/>
