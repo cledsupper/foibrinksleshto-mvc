@@ -48,7 +48,7 @@
 						<th scope="col">Vendido para</th>
 						<th scope="col">Data</th>
 						<th scope="col">Forma de pagamento</th>
-						<th scope="col">Valor pago</th>
+						<th scope="col">Valor pago (R$)</th>
 						<th class="linha-centro" scope="col">Ação</th>
 					</tr>
 				</thead>
@@ -58,15 +58,15 @@
 		Venda venda = vendas.get(i);
 		long codigo = venda.getCodigo();
 		long codigoCliente = venda.getCliente().getCodigo();
+		char forma_letra = venda.getPagamento().getForma();
 		String nomeCliente = venda.getCliente().getNomeCompleto();
 		String dataVenda = venda.getDataVendaStringBr();
-		char forma_letra = venda.getPagamento().getForma();
 		String forma = forma_letra == 'D' ? "Dinheiro em espécie" : "Cartão de crédito";
-		String valorPago = String.format("R$ %.2f", venda.getPagamento().getValorPago());
+		String valorPago = String.format("%.2f", venda.getPagamento().getValorPago());
 %>
 				<tr>
 					<td class="linha-centro" scope="row"><%= codigo %></td>
-					<td class="linha-direito">
+					<td class="linha-centro">
 						<button onclick="detalhaCliente(<%= codigoCliente %>);" class="btn btn-primary"><%= nomeCliente %></button>
 					</td>
 					<td class="linha-centro">

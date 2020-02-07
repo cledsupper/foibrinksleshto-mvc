@@ -54,7 +54,7 @@
 				</tr>
 				<tr>
 					<th scope="col">Adicionar</th>
-					<th style="display: none;">Código</th>
+					<th style="display: none;">#</th>
 					<th scope="col">Nome</th>
 					<th scope="col">Preço original (R$)</th>
 					<th scope="col">Oferta (R$)</th>
@@ -99,7 +99,7 @@
 				</tr>
 				<tr>
 					<th scope="col">Adicionar</th>
-					<th scope="col">Codigo</th>
+					<th scope="col">#</th>
 					<th scope="col">Nome do produto</th>
 					<th scope="col">Marca</th>
 					<th scope="col">Faixa etária</th>

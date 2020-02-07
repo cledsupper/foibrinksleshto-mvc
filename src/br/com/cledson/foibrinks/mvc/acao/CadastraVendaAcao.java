@@ -33,12 +33,11 @@ public class CadastraVendaAcao implements Acao {
 			for (int i=0; i < produtos_codigos.length; i++) {
 				Produto produto = Produto.procura(Long.parseLong(produtos_codigos[i]));
 				int qtd = Integer.parseInt(produtos_qtds[i]);
-				/* TODO: habilitar o frete para a lua se necessário. */
 				if (incluiFreteParaLua) {
 					venda.adicionaProduto(
 							produto,
 							qtd,
-							produto.getPreco() /* + produto.getFreteParaLua() */);
+							produto.getPreco() + produto.getFreteParaLua());
 				}
 				else {
 					if (ProdutoValidador.produtoNovo(produto))

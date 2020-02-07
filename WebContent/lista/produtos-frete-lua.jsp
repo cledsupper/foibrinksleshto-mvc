@@ -43,16 +43,13 @@
 						<th colspan="8" class="observe linha-centro" scope="row">Selecione os produtos e as quantidades deles</th>
 					</tr>
 					<tr>
-						<th colspan="8" class="observe linha-centro" scope="row">(*) valor demonstrativo. [FUNÇÃO DE FRETE DESABILITADA]</th>
-					</tr>
-					<tr>
 						<th scope="col">Adicionar</th>
-						<th style="display: none;">Código</th>
+						<th style="display: none;">#</th>
 						<th scope="col">Nome do produto</th>
 						<th scope="col">Preço (R$)</th>
 						<th scope="col">Peso (g)</th>
 						<th scope="col">Volume (m³)</th>
-						<th scope="col">Frete estimado de Angicos para a Lua (R$)<strong class="observe">*</strong></th>
+						<th scope="col">Frete estimado de Angicos para a Lua (R$)</th>
 						<th scope="col">Quantidade</th>
 					</tr>
 				</thead>

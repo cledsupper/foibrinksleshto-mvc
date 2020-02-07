@@ -49,8 +49,11 @@
 		double custoTotal = venda.geraCustoTotal();
 		double impostos = custoTotal*Constantes.VALOR_IMPOSTO;
 		char forma = venda.getPagamento().getForma();
+		String string_custoTotal = String.format("%.2f", custoTotal);
+		String string_impostos = String.format("%.2f", impostos);
 		String string_forma = forma == Dinheiro.FORMA ?
 				Constantes.STRING_FORMA_DINHEIRO : Constantes.STRING_FORMA_CARTAO;
+		String valorPago = String.format("%.2f", venda.getPagamento().getValorPago());
 %>
   <br>
 
@@ -71,11 +74,11 @@
   <h4>Custos e pagamento</h4>
   <div class="input-group">
     <span class="input-group-addon" id="addon-custo-total">Custo total R$</span>
-    <input type="number" class="form-control" aria-describedby="addon-custo-total" value="<%= custoTotal %>" readonly>
+    <input type="text" class="form-control" aria-describedby="addon-custo-total" value="<%= string_custoTotal %>" readonly>
   </div>
   <div class="input-group">
   	<span class="input-group-addon" id="addon-imposto">Tributos totais R$</span>
-  	<input type="number" class="form-control" aria-describedby="addon-imposto" value="<%= impostos %>" readonly>
+  	<input type="text" class="form-control" aria-describedby="addon-imposto" value="<%= string_impostos %>" readonly>
   </div>
   <br>
 
@@ -98,7 +101,7 @@
 %>
   <div class="input-group">
 		<span class="input-group-addon" id="addon-valor-pago">Valor pago R$</span>
-		<input type="number" class="form-control" aria-describedby="addon-valor-pago" value="<%= venda.getPagamento().getValorPago() %>" readonly>
+		<input type="text" class="form-control" aria-describedby="addon-valor-pago" value="<%= valorPago %>" readonly>
   </div>
   <br><br>
 
@@ -118,8 +121,8 @@
 <%
 	for (int i=0; i < carrinho.size(); i++) {
 		Produto produto = carrinho.get(i).getProduto();
-		double valorUnitario = carrinho.get(i).getValorUnitario();
-		double qtdProdutos = carrinho.get(i).getQtdProdutos();
+		String valorUnitario = String.format("%.2f", carrinho.get(i).getValorUnitario());
+		String qtdProdutos = String.format("%d", carrinho.get(i).getQtdProdutos());
 %>
       <tr>
         <td class="linha-centro" scope="row">

@@ -35,16 +35,16 @@ if (dependentes != null) {
 %>
 <h1>Dependentes de <%= cliente.getNomeCompleto() %></h1>
 <%
-		if (dependentes.size() == 0) { %>
+		if (dependentes.isEmpty()) { %>
 			<h3>Nenhum dependente foi encontrado :?</h3>
 			<br>
-			<p class="linha-centro"><a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a></p>
+			<p class="linha-centro"><a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a></p>
 <%
 		} else {
 %>
 		<h3>Dependentes</h3>
 		<br>
-		<a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a>
+		<a href="../cadastra/dependente.jsp?codigo-cliente=<%= codigo_cliente %>"><button class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>	Cadastrar dependente</button></a>
 
 		<table class="table">
 			<thead>
